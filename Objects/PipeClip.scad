@@ -8,7 +8,7 @@ pipeDiameter = 15.5;    // Diamater of the pipe, inner diamater of the clip
 outerDiameter = 20;     // Outer diamater of the clip
 clipWidth = 5;          // Thickness of the clip
 objectWidth = 3.5;      // Width of the object to hold
-objectHeight = 1.5;     // Height of the object to hold
+objectHeight = 1.2;     // Height of the object to hold
 rounding = .5;          // How much to round off the edges
 
 // Common settings:
