@@ -1,8 +1,8 @@
 // This Clip is used for mounting an LED strips, wires, or antying small and relatively flat to a pipe.
 //-------------------------------------------------------------------------------------
 
-//$fn=20;   // Used when doing prototyping design (faster rendering)
-$fn=60;     // Used for final rending to .stl. (Very SLOW rendering.)
+$fn=20;   // Used when doing prototyping design (faster rendering)
+//$fn=60;     // Used for final rending to .stl. (Very SLOW rendering.)
 
 pipeDiameter = 15.5;    // Diamater of the pipe, inner diamater of the clip
 outerDiameter = 20;     // Outer diamater of the clip
