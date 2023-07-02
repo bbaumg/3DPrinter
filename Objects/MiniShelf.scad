@@ -11,7 +11,7 @@
 
 */
 
-
+// Configuration Settings
 shelves = 3;
 insideWidth = 110;
 insideDepth = 80;
@@ -30,28 +30,33 @@ cube([
     wallThickness,
     insideDepth+backThickness,
     (insideHeight*shelves)+(wallThickness*(shelves+1))]);
+
 // Right side
 translate([insideWidth + wallThickness,0,0]) cube([
     wallThickness,
     insideDepth+backThickness,
     (insideHeight*shelves)+(wallThickness*(shelves+1))]);
+
 // Back
 translate([0,insideDepth,0]) cube([
     insideWidth + wallThickness*2,
     backThickness,
     (insideHeight * shelves) + (wallThickness * (shelves+1))]);
+
 // Bottom
 cube([
     insideWidth + wallThickness*2,
     insideDepth + backThickness,
     wallThickness
     ]);
+
 // Top
 translate([0,0,(insideHeight*shelves)+(wallThickness*(shelves))]) cube([
     insideWidth + wallThickness*2,
     insideDepth + backThickness,
     wallThickness
     ]);
+
 // Inside shelves
 for (i = [1 : shelves]) {
     translate([0, 0, i * (insideHeight + wallThickness)]) 
@@ -61,12 +66,3 @@ for (i = [1 : shelves]) {
         wallThickness
         ]);
 }
-
-
-//difference(){
-//    //cube([
-//    //    insideWidth + wallThickness*2, 
-//    //    insideDepth + wallThickness,
-//    //    insideHeight + wallThickness*2]);
-//    //cube([insideWidth, insideDepth,insideHeight]);
-//}
