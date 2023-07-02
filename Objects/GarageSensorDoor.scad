@@ -13,9 +13,9 @@ baseCorner = 5;
 baseScrew = 4;      //#8 = 4mm
 blockWidth = 15;
 blockHeight = 60;
-blockDepth = 40;
-blockScrewDiamater = 1;
-blockScrewHeight = 10;
+blockDepth = 50;
+blockScrewDiamater = 2.5;
+blockScrewHeight = 12;
 blockScrewSpace = 45;
 
 
@@ -47,9 +47,9 @@ translate([0,-blockDepth,(baseHeight-blockHeight)/2]){
     difference(){
         cube([blockWidth,blockDepth,blockHeight]);
         translate([blockWidth/2,-1,blockHeight/2-blockScrewSpace/2]) rotate([270,0,0])
-            #cylinder(d=blockScrew, h=blockScrewHeight+1);
+            #cylinder(d=blockScrewDiamater, h=blockScrewHeight+1);
         translate([blockWidth/2,-1,blockHeight/2+blockScrewSpace/2]) rotate([270,0,0])
-            #cylinder(d=blockScrew, h=blockScrewHeight);
+            #cylinder(d=blockScrewDiamater, h=blockScrewHeight);
     }
 }
 

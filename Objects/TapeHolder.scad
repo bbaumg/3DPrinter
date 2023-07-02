@@ -13,10 +13,13 @@
  * GNU General Public License for more details.
  *
  * See <http://www.gnu.org/licenses/>.
+ *
+ * Relies on module from revarbat / BOSL 
+ *  https://github.com/revarbat/BOSL
 */
 
 
-include <../../BOSL/threading.scad>
+include <../BOSL/threading.scad>
 
 ////////////////////////////////////////////////////////////////////////
 //  Variables
