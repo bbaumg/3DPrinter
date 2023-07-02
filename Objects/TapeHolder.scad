@@ -16,10 +16,23 @@
  *
  * Relies on module from revarbat / BOSL 
  *  https://github.com/revarbat/BOSL
+ 
+    Settings for standard size role of Leukotape
+        outerDiamater = 77;
+        innerDiamater = 24.5;
+        innerThickness = 5;
+        outerHeight = 41;
+        lidHeight = 5;
+        lidSpace = .5;
+        wallThickness = 1;
+        threadSets = 3;
+        threadPitch = 5;
+        smoothness = 180;		// 20 while testing 180 for final
+
 */
 
 
-include <../BOSL/threading.scad>
+include <../../BOSL/threading.scad>
 
 ////////////////////////////////////////////////////////////////////////
 //  Variables
