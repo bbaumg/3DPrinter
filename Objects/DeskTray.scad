@@ -73,7 +73,7 @@ show_lid=true;	// Whether or not to render the lid. To make open boxes with no l
 // 3: Lid that snaps down onto the box. Also need to change lid_height to around 1.5mm.
 // 4: Stackable version of cover 1 there boxes slide into one another. You will need one cover for the last box. (Not tested)
 // 5: Oversized lid sits on top and has sides that extend down. (Needs snapp support)
-//lid_type=1; // Lid type, see above.
+lid_type=0; // Lid type, see above.
 //has_thumbhole=true; // Add gripping locations for easy opening.
 //has_coinslot=false; // Add slot in the top for dropping in components.
 //has_snap=true; // Add small ridges or snaps to lids to help keep them closed.
@@ -102,7 +102,7 @@ show_lid=true;	// Whether or not to render the lid. To make open boxes with no l
 //internal_size_deep=comp_size_deep/2; // How far into the box to start the internal structure. Should be `comp_size_deep/2` for type 1-2, `wall` for 3, or comp_size_deep for type 4-5.
 //internal_size_circle=internal_type==1 ? internal_size_deep : internal_size_deep * 2 / sqrt(3); // Use this calculation, or the shorter comp_size for type 4-5.
 //internal_fn=internal_type==1 || internal_type==4 ? 60 : 6; // Complexity of internal curves, may need to increase for larger or smoother curves.
-//internal_wall=wall; // Custom size for internal walls.
+internal_wall=1.2; // Custom size for internal walls.
 
 // Text Settings
 // 0: None.
@@ -173,17 +173,16 @@ complex_box=[
     
 ];
 make_complex_box=true;*/
-
-internal_wall=1.2;
-comp_size_x = (26+internal_wall)*8-internal_wall;
-comp_size_y = (26+internal_wall)*4-internal_wall;
-comp_size_deep = 48;
-internal_wall_deep = comp_size_deep-15;
+comp_size_x = (37*3)+(1.2*2);
+comp_size_y = (37*1)+(1.2*1)+112;
+comp_size_deep = 30;
 box_corner_radius=1;
-wall= 4;
-comp1=make_object(x=26, y=26, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=8, repeat_y=2);
-complex_box=[comp1];
+wall= 3;
+comp1=make_object(x=37, y=37, z=comp_size_deep, offset_x=37+1.2, offset_y=0, repeat_x=2, repeat_y=1);
+comp2=make_object(x=37, y=37, z=comp_size_deep-15, offset_x=0, offset_y=0, repeat_x=1, repeat_y=1);
+complex_box=[comp1,comp2];
 make_complex_box=true;
+
 
 // Some notes on complex prints:
 /* OpenSCAD expereicne is required to do pretty much any type of customization or complex opperations. This will essentaily jsut make the containers within one larger object with a single lid. Alternatly multiple boxes could be reated and then joined together with translations to make a larger object with multiple lids. 

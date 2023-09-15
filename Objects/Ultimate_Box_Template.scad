@@ -103,6 +103,7 @@ show_lid=true;	// Whether or not to render the lid. To make open boxes with no l
 //internal_size_circle=internal_type==1 ? internal_size_deep : internal_size_deep * 2 / sqrt(3); // Use this calculation, or the shorter comp_size for type 4-5.
 //internal_fn=internal_type==1 || internal_type==4 ? 60 : 6; // Complexity of internal curves, may need to increase for larger or smoother curves.
 //internal_wall=wall; // Custom size for internal walls.
+//internal_wall_deep=comp_size_deep; // If set to lower then comp_size_deep then the internal walls will be this tall.
 
 // Text Settings
 // 0: None.
@@ -173,17 +174,6 @@ complex_box=[
     
 ];
 make_complex_box=true;*/
-
-internal_wall=1.2;
-comp_size_x = (26+internal_wall)*8-internal_wall;
-comp_size_y = (26+internal_wall)*4-internal_wall;
-comp_size_deep = 48;
-internal_wall_deep = comp_size_deep-15;
-box_corner_radius=1;
-wall= 4;
-comp1=make_object(x=26, y=26, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=8, repeat_y=2);
-complex_box=[comp1];
-make_complex_box=true;
 
 // Some notes on complex prints:
 /* OpenSCAD expereicne is required to do pretty much any type of customization or complex opperations. This will essentaily jsut make the containers within one larger object with a single lid. Alternatly multiple boxes could be reated and then joined together with translations to make a larger object with multiple lids. 
