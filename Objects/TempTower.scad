@@ -82,7 +82,7 @@ Levels = 4;
 // Temperature Increment Per block
 tempIncrement = 5;
 // Starting Temperature
-startTemp = 210;
+startTemp = 230;
 // Temperature Ascending Or Descending
 tempOrder = -1; // [-1:Descending, 1:Ascending]
 //Type Of Base On the Tower

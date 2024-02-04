@@ -4,6 +4,13 @@
 wall=wall;
 internal_wall=internal_wall;
 
+sdcase_x = 8;
+sdcase_y = 43;
+sdcase_qty_x = 15;
+sdcase_qty_y = 1;
+extra_x = 0;
+extra_y = 50;
+
 // Include the framework. You can change the prefix to load from a shared path.
 include    <Ultimate_Box_Generator.scad>;
 
@@ -12,20 +19,36 @@ include    <Ultimate_Box_Generator.scad>;
 
 // Parts to render. To do more complex opperations disable these and manually call make_box() and make_lid() instead.
 show_box=true;	// Whether or not to render the box
-show_lid=true;	// Whether or not to render the lid. To make open boxes with no lid set `show_lid=false` and `lid_type=5`.
+show_lid=false;	// Whether or not to render the lid. To make open boxes with no lid set `show_lid=false` and `lid_type=5`.
+
+lid_type=0; // Lid type, see above.
+internal_wall=1.2;
+
+comp_size_x = (sdcase_x+internal_wall)*sdcase_qty_x-internal_wall+extra_x;
+comp_size_y = (sdcase_y+internal_wall)*sdcase_qty_y-internal_wall+extra_y;
+comp_size_deep = 30;
+//internal_wall_deep = comp_size_deep-15;
+box_corner_radius=1;
+wall= 4;
+comp1=make_object(x=sdcase_x, y=sdcase_y, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=sdcase_qty_x, repeat_y=sdcase_qty_y);
+complex_box=[comp1];
+make_complex_box=true;
+
+
+
 
 // General Settings
-comp_size_deep = 55; // Depth of compartments
-comp_size_x = 70;	 // Size of compartments, X
-comp_size_y = 60;	 // Size of compartments, Y
-wall = 4;		    // Width of wall, see `internal_wall` below for alternate inner wall size.
-repeat_x = 1;		// Number of compartments, X
-repeat_y = 2;		// Number of compartments, Y
-tolerance=.15;      // Tolerance around lid.  If it's too tight, increase this. If it's too loose, decrease it.
+//comp_size_deep = 12; // Depth of compartments
+//comp_size_x = 50;	 // Size of compartments, X
+//comp_size_y = 35;	 // Size of compartments, Y
+//wall = 2.5;		    // Width of wall, see `internal_wall` below for alternate inner wall size.
+//repeat_x = 1;		// Number of compartments, X
+//repeat_y = 1;		// Number of compartments, Y
+//tolerance=.15;      // Tolerance around lid.  If it's too tight, increase this. If it's too loose, decrease it.
 
 // Box Rounding
-box_corner_radius=1; // Add a rounding affect to the corners of the box. Anything over `wall` will cause structure and lid problems.
-//internal_corner_radius=15; // Add a rounding affect to the inside.
+//box_corner_radius=0; // Add a rounding affect to the corners of the box. Anything over `wall` will cause structure and lid problems.
+//internal_corner_radius=0; // Add a rounding affect to the inside.
 //mesh_corner_radius=0; // Leave a radius around each corner of the mesh. May hep with bridges.
 //corner_fn=30;
 
@@ -73,7 +96,7 @@ box_corner_radius=1; // Add a rounding affect to the corners of the box. Anythin
 // 3: Lid that snaps down onto the box. Also need to change lid_height to around 1.5mm.
 // 4: Stackable version of cover 1 there boxes slide into one another. You will need one cover for the last box. (Not tested)
 // 5: Oversized lid sits on top and has sides that extend down. (Needs snapp support)
-lid_type=2; // Lid type, see above.
+//lid_type=1; // Lid type, see above.
 //has_thumbhole=true; // Add gripping locations for easy opening.
 //has_coinslot=false; // Add slot in the top for dropping in components.
 //has_snap=true; // Add small ridges or snaps to lids to help keep them closed.
@@ -97,28 +120,27 @@ lid_type=2; // Lid type, see above.
 // 3: Rough bottom for make bits sit unevenly. (Partial)
 // 4: Verical rounding on cordner. Set `internal_size_deep` to `comp_size_deep` and `internal_size_circle` to the shortest `comp_size` for a circle.
 // 5: Vertical hexegon. Retulst may varry.
-internal_type=1; // Internal structure, see above.
-internal_rotate=true; // On lid axis or rotate to opposite.
-internal_size_deep=comp_size_deep/3; // How far into the box to start the internal structure. Should be `comp_size_deep/2` for type 1-2, `wall` for 3, or comp_size_deep for type 4-5.
+//internal_type=0; // Internal structure, see above.
+//internal_rotate=false; // On lid axis or rotate to opposite.
+//internal_size_deep=comp_size_deep/2; // How far into the box to start the internal structure. Should be `comp_size_deep/2` for type 1-2, `wall` for 3, or comp_size_deep for type 4-5.
 //internal_size_circle=internal_type==1 ? internal_size_deep : internal_size_deep * 2 / sqrt(3); // Use this calculation, or the shorter comp_size for type 4-5.
 //internal_fn=internal_type==1 || internal_type==4 ? 60 : 6; // Complexity of internal curves, may need to increase for larger or smoother curves.
-internal_wall=1.2; // Custom size for internal walls.
-//internal_wall_deep=comp_size_deep; // If set to lower then comp_size_deep then the internal walls will be this tall.
+//internal_wall=wall; // Custom size for internal walls.
 
 // Text Settings
 // 0: None.
 // 1: Cutout. Remove material formt he wall.
 // 2: Raised. If a mesh is ued part of it is filled in to hold the text. Lids 0 and 3 are printed upside down by default. With this option used they will require supports regardless of the orrientation printed.
-text_type=1; // Text type, see above.
-text_depth=1; // Distance to cutout text or raise it. User `wall` to cut through.
-text_size=10; // Font Size.
+//text_type=0; // Text type, see above.
+//text_depth=wall/6; // Distance to cutout text or raise it. User `wall` to cut through.
+//text_size=5; // Font Size.
 //text_font="Courier New:style=Bold"; // Use Hepl -> Font List to see options.
-text_message="Paperclips"; // Message Text, or use `["Line 1", "Line 2"]` for multiline.
+//text_message="Red Player"; // Message Text, or use `["Line 1", "Line 2"]` for multiline.
 //text_message_compartments=false;//[["AA", "BB", "CC"], ["AB", "BC", "CD"]]; // Custom text for compartments in top or bottom. Also support multiline as `[[ ["A", "B"] ]]`.
-text_sides=false;//[true, true, true, false]; // Sides to put text on, [X, Y, X, Y]
-text_top=true; // Put Text on the top.
-text_bottom=false; // Put Text on the bottom.
-text_rotation=270; // Rotate the top and bottom text by X degrees. 90 will rotate from the X axis to the Y axis.
+//text_sides=true;//[true, true, true, false]; // Sides to put text on, [X, Y, X, Y]
+//text_top=true; // Put Text on the top.
+//text_bottom=false; // Put Text on the bottom.
+//text_rotation=0; // Rotate the top and bottom text by X degrees. 90 will rotate from the X axis to the Y axis.
 //text_offset=0; // Text is verticaly centered in the wall. This may look "off" due to casing or hanging tails. You can manually adjust the vertical alignment with this setting.
 //text_fn=30; // Complexity of the letters, may need to increese with larger fonts.
 //text_backdrop_scale=[.9, 1.5]; // Font size scaleing used on the backdrop when `text_type=2` is used on sides with a mesh.
@@ -174,6 +196,7 @@ complex_box=[
     
 ];
 make_complex_box=true;*/
+
 
 // Some notes on complex prints:
 /* OpenSCAD expereicne is required to do pretty much any type of customization or complex opperations. This will essentaily jsut make the containers within one larger object with a single lid. Alternatly multiple boxes could be reated and then joined together with translations to make a larger object with multiple lids. 

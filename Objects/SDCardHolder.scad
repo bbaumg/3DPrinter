@@ -28,7 +28,7 @@ show_lid=true;	// Whether or not to render the lid. To make open boxes with no l
 // General Settings
 comp_size_deep = 45; // Depth of compartments
 comp_size_x = (sd_x*sd_quantity) + (sd_wall*sd_quantity);	 // Size of compartments, X
-comp_size_y = sd_y;	 // Size of compartments, Y
+comp_size_y = sd_y + 40;	 // Size of compartments, Y
 wall = 4;		    // Width of wall, see `internal_wall` below for alternate inner wall size.
 //repeat_x = 1;		// Number of compartments, X
 //repeat_y = 12;		// Number of compartments, Y
@@ -38,7 +38,7 @@ tolerance=.15;      // Tolerance around lid.  If it's too tight, increase this. 
 
 
 comp1=make_object(x=sd_x, y=sd_y, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=sd_quantity, repeat_y=1);
-comp2=make_object(x=sd_x, y=sd_y, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=sd_quantity, repeat_y=1);
+comp2=make_object(x=sd_x, y=comp_size_y, z=comp_size_deep, offset_x=0, offset_y=0, repeat_x=0, repeat_y=0);
 
 complex_box=[comp1];
 make_complex_box=true;
@@ -138,7 +138,7 @@ text_message="SD Cards"; // Message Text, or use `["Line 1", "Line 2"]` for mult
 text_sides=false;//[true, true, true, false]; // Sides to put text on, [X, Y, X, Y]
 text_top=true; // Put Text on the top.
 text_bottom=false; // Put Text on the bottom.
-text_rotation=270; // Rotate the top and bottom text by X degrees. 90 will rotate from the X axis to the Y axis.
+text_rotation=180 ; // Rotate the top and bottom text by X degrees. 90 will rotate from the X axis to the Y axis.
 //text_offset=0; // Text is verticaly centered in the wall. This may look "off" due to casing or hanging tails. You can manually adjust the vertical alignment with this setting.
 //text_fn=30; // Complexity of the letters, may need to increese with larger fonts.
 //text_backdrop_scale=[.9, 1.5]; // Font size scaleing used on the backdrop when `text_type=2` is used on sides with a mesh.

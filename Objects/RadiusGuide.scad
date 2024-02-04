@@ -2,15 +2,18 @@
 
 
 shape = "curve";        //"curve" or "flat"
-radius = 20;            // how big should the curve, or angle be?
-overallThickness = 4;
+radius = 51;            // how big should the curve, or angle be?
+overallThickness = 6;
 wallThickness = 4;
-wallHeight = 10;
+wallHeight = 12;
 wallLength = 50;
-overallWidth = 100;     //default = 100.  If radius > 90 then set "radius + 25 + wallLength"
+overallWidth = 136;     //default = 100.  If radius > 90 then set "radius + 25 + wallLength"
 fingerHole = 15;
 textSize = 5;
 textDepth = .5;         // .5mm is pretty good...
+
+//NOTE:	If you increase the overallWidth by the same amount as wallThickness with each increasing
+//		size, then they will stack nicely.
 
 //Inch Conversions
     // 1/4"     =  6.35 mm

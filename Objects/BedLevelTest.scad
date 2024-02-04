@@ -1,7 +1,7 @@
 bedWidth = 300;
 bedDepth = 300;
 maxSpace = 10;
-squareSpacing = 20;
+squareSpacing = 10;
 lineWidth = .4;
 
 // Calculations
