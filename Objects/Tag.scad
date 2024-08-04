@@ -11,12 +11,15 @@ holeHeight = 2;
 holeSpace = 2.5;  // how far from the edge should the hole be.
 textDepth = .5;
 textSize = 15;
-starting = 1;
-quantity = 20;
+starting = 21;
+quantity = 19;
 
 $fn = 60;
 
-for (i=[starting:quantity]){
+// Calculated Fields
+ending = starting + quantity;
+
+for (i=[starting:ending]){
 	translate([tagWidth*i+5*i, 0, 0])tag(i);
 }
 
@@ -29,5 +32,5 @@ module tag(i=0){
 			roundedsquare(x=holeWidth, y=holeHeight, z=tagThick, radius = 1);
 	}
 	translate([tagWidth/2,tagHeight/2,tagThick-textDepth])rotate([0,0,90])
-		linear_extrude(textDepth) text(str(i), size = textSize, halign="center", valign="center", font="Courier 10 Pitch");
+		linear_extrude(textDepth) text(str(i), size = textSize, halign="center", valign="center", font="Stencil");
 }
