@@ -1,4 +1,26 @@
+/*
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	Purpose:  
+	
+	History:	
+		MM/DD/YYYY	Initial creation
+
+	Notes:
+		- Nothing special see inline notes below
+
+*/
+
+/****** Variables ******************************************************
+***********************************************************************/
 
 length = 200;       // total lenght
 width = 40;         // total width
@@ -12,31 +34,52 @@ outterBevel = 20;   // angle to remove some outside material
 screwOffset = 20;   // how far to move the srew in from the end
 screwDepth = 5;     // how deep to set the screw
 
+// Special variables
+$fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
 
-difference(){
-    cube([width, length, height]);
-    // Remove the top inner section
-    translate([-base,0,thickness]) rotate([0,-slopeInner,0]) cube([width, length, height]);
-    // Remove the bottom slope
-    translate([0,0,-height]) rotate([0,-slopeOutter,0]) cube([width*2, length, height]);
-    // Remove the inner bevel
-    translate([0,0,0]) rotate([0,-innerBevel,0]) cube([width, length, height]);
-    // Remove the outter bevel
-    translate([width,0,height]) rotate([0,outterBevel+90,0]) cube([width, length, height*2]);
-    // Remove the front screw
-    translate([width-(base/2),screwOffset,screwDepth]) rotate([180,0,0]) screwHole();  // Screw hole
-    translate([width-(base/2),length-screwOffset,screwDepth]) rotate([180,0,0]) screwHole();  // Screw head
+/****** Imports & Includes & Calculations ******************************
+***********************************************************************/
+include <modules/Modules.scad>
+
+// Calculations
+
+
+/****** The Object *****************************************************
+***********************************************************************/
+
+object();
+
+module object(length=length){
+	difference(){
+			cube([width, length, height]);
+			// Remove the top inner section
+			translate([-base,0,thickness]) rotate([0,-slopeInner,0]) cube([width, length, height]);
+			// Remove the bottom slope
+			translate([0,0,-height]) rotate([0,-slopeOutter,0]) cube([width*2, length, height]);
+			// Remove the inner bevel
+			translate([0,0,0]) rotate([0,-innerBevel,0]) cube([width, length, height]);
+			// Remove the outter bevel
+			translate([width,0,height]) rotate([0,outterBevel+90,0]) cube([width, length, height*2]);
+			// Remove the front screw
+			translate([width-(base/2),screwOffset,screwDepth]) rotate([180,0,0]) screwHole();  // Screw hole
+			translate([width-(base/2),length-screwOffset,screwDepth]) rotate([180,0,0]) screwHole();  // Screw head
+	}
 }
 
-
-module screwHole(){
-    screwHole = 4.5;
-    screwDepth = 10;
-    screwHead = 9;
-    headTaper = 2.3;
-    screwHeadDepth = 5;
-    translate([0,0,-headTaper])cylinder(d1=screwHole, d2=screwHead, h = headTaper, $fn=20);
-    translate([0,0,-headTaper-screwDepth])cylinder(d=screwHole, h=screwDepth, $fn=10);
-    translate([0,0,-headTaper-screwDepth])cylinder(d=screwHole, h=screwDepth, $fn=10);
-    translate([0,0,0]) cylinder(d=screwHead, h=screwHeadDepth, $fn=10);
+/****** Batch Export***************************************************
+	Use this module to create multiple exports based on rerenderd values
+	https://github.com/18107/OpenSCAD-batch-export-stl
+	<modules/export.py>
+	
+	This script searches for "module export()" and individually renders
+	and exports each item in it. Each item is expected to be on its own line. 
+	The file name will be the comment on the same line, or the module 
+	call if no comment exists. All files will be put in a folder with 
+	the same name as the scad file it's created from.
+***********************************************************************/
+module export() {
+	object(100); //WineRack-100
+	object(150); //WineRack-150
+	object(200); //WineRack-200
 }
+
