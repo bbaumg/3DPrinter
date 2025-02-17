@@ -9,8 +9,8 @@ cy=18;
 cz=88.5;
 
 // Case thickness
-dx=3;
-dy=3;
+dx=2;
+dy=2;
 dz=2;
 
 // Top/bottom ratio (should equal 100%)
@@ -26,7 +26,7 @@ dzlip=15.0;
 tol=0.1;
 
 // Rounded edge radius
-radius = 2;
+radius = 1;
 
 module card_box_end()
 {

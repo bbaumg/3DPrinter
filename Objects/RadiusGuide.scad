@@ -13,7 +13,8 @@
 	
 	History:	
 		??/??/????	Initial creation
-		02/17/2025	Modular output, and common file formatting
+		02/17/2025	Restructured code.  Batch exportable now.
+								Modular output, and common file formatting
 
 	Notes:
 		* For variables with an ** in the notes.  Means it can be overwritten
@@ -21,18 +22,7 @@
 		If you increase the overallWidth by the same amount as wallThickness 
 		with each increasing size, then they will stack nicely.
 		
-		Inch Conversions
-			1/4"     =  6.35 mm
-			5/16"    =  7.94 mm
-			3/8"     =  9.53 mm
-			7/16"    = 11.11 mm
-			1/2"     = 12.70 mm
-			3/4"     = 19.05 mm
-			1"       = 25.40 mm
-			1 1/2"   = 31.75 mm
-			1 3/4"   = 44.45 mm
-			2"       = 50.80 mm
-
+		See exports section for common sizes for radius and width
 */
 
 /****** Variables ******************************************************
@@ -40,7 +30,7 @@
 
 shape = "curve";        //"curve" or "flat"
 measurement = "in";			//"mm" or "in"
-cutout = "1 1/2";       //** how big should the curve, or angle be?
+cutout = "1/4";       //** how big should the curve, or angle be?
 overallThickness = 6;
 wallThickness = 4;
 wallHeight = 12;
@@ -56,14 +46,11 @@ $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
 /****** Imports & Includes & Calculations ******************************
 ***********************************************************************/
 include <modules/Modules.scad>
-include </home/barrett/snap/openscad-nightly/4924/.local/share/OpenSCAD/libraries/BOSL2/std.scad>
-
-
+include <BOSL2/std.scad>
 		
 /****** The Object *****************************************************
 ***********************************************************************/
-//object();
-	object("1 3/4", 148); //RadiusGuide-1 3_4
+object();
 
 module object(cutout = cutout, overallWidth = overallWidth){
 	// Calculations

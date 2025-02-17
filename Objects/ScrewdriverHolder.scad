@@ -15,7 +15,7 @@
 		02/17/2025	Initial creation
 	
 	Notes:
-		- Nothing special see inline notes below
+		- Inspired by: https://www.printables.com/model/526785-screwdriver-holder/files
 
 */
 
