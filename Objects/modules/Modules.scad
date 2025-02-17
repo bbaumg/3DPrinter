@@ -1,7 +1,26 @@
-/***************************************
-*   Purpose:	Regular use modules
-***************************************/
+/*
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	Purpose:  Hold general use modules for to simplify making of objects
+	
+	History:	
+		01/25/2024	Initial creation
+		02/17/2025	Added modules for roundedCube, roundedCylinder
+								and FilletedCylinder
+
+*/
+
+/***********************************************************************
+****** Module - screwHole
+***********************************************************************/
 //screwHole();
 module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5){
 	// Common size screws
@@ -12,6 +31,9 @@ module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3,
     translate([0,0,0]) cylinder(d=screwHead, h=screwHeadDepth, $fn=10);
 }
 
+/***********************************************************************
+****** Module - roundedCube
+***********************************************************************/
 //roundedCube(x=50, y=30, z=20, r=5, xyz="x");
 //roundedCube(x=50, y=30, z=20, r=5, xyz="y");
 //roundedCube(x=50, y=30, z=20, r=5, xyz="z");
@@ -45,6 +67,9 @@ module roundedCube(x=50, y=30, z=20, r=5, xyz="z"){
 	}
 }
 
+/***********************************************************************
+******* Module - roundedCylinder
+***********************************************************************/
 //roundedCylinder(d=200, h=100, r=5);
 //difference(){roundedCylinder();filletedCylinder();}
 module roundedCylinder(d=200, h=100, r=5){
@@ -54,6 +79,9 @@ module roundedCylinder(d=200, h=100, r=5){
 	}
 }
 
+/***********************************************************************
+******* Module - filletedCylinder
+***********************************************************************/
 //filletedCylinder();
 //filletedCylinder(d=10, h=20, tr=1, br=1, pad=.1, s=60);
 module filletedCylinder(d=50, h=100, tr=10, br=5, pad=5, s=30){
@@ -79,5 +107,8 @@ module filletedCylinder(d=50, h=100, tr=10, br=5, pad=5, s=30){
 	}
 }
 
+/***********************************************************************
+******* Module - CylinderFillet
+***********************************************************************/
 module CylinderFillet(){
 }

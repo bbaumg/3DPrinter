@@ -19,8 +19,8 @@
 
 */
 
-/////--Variables--//////////////////////////////////////////////////////
-//----------------------------------------------------------------------
+/****** Variables ******************************************************
+***********************************************************************/
 driverArms = 5;							// The number of arms. PS It always starts with a long arm
 driverSpacingOn = 50;					// how far apart should holders be on the same arm
 driverSpacingBetween = 25;		// how far apart should arms be
@@ -35,8 +35,8 @@ screwHole = 4;								// size of the screw hole
 $fn = $preview ? 32 : 64;			// 0 is OpenSCAD default
 filletRadius = 1;							// this will adjust the overall roundness of edges.
 
-/////--Imports & Includes & Calculations--//////////////////////////////
-//----------------------------------------------------------------------
+/****** Imports & Includes & Calculations ******************************
+***********************************************************************/
 include <modules/Modules.scad>
 
 // Calculations
@@ -46,8 +46,8 @@ holderRadius = holderDiamater/2;
 mountWidth = (driverArms) * driverSpacingBetween;
 echo(mountWidth);
 
-/////--The Object--/////////////////////////////////////////////////////
-//----------------------------------------------------------------------
+/****** The Object *****************************************************
+***********************************************************************/
 
 // Loop through and create all the arms.
 	// Long Arm
