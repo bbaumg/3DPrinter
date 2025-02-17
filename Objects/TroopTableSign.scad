@@ -7,14 +7,14 @@ tagThick = 2.2;
 tagEdge = 4;
 baseCutout = 27;
 cornerRadius = 17;
-textDepth = .8;
+textDepth = 1;
 textSize = 20;
 activeTextLines = 2;
-textTopPadding = 8;
+textTopPadding = 12;
 textBottomPadding = 25;
 textFont="Stencil";
 textLine1 = "447";
-textLine1Size = 34;
+textLine1Size = 38;
 textLine2 = "Table 1";
 textLine2Size = 16;
 textLine3 = "#1";
@@ -26,6 +26,30 @@ textLine4Size = textSize;
 *	Actual thickness is tagThick.
 *	Plate thickness is tagThick - TextDepth
 */
+
+/*Settings as first printed:
+	tagWidth = 150;
+	tagHeight = tagWidth/1.618;
+	tagThick = 2.2;
+	tagEdge = 4;
+	baseCutout = 27;
+	cornerRadius = 17;
+	textDepth = 1;
+	textSize = 20;
+	activeTextLines = 2;
+	textTopPadding = 12;
+	textBottomPadding = 25;
+	textFont="Stencil";
+	textLine1 = "447";
+	textLine1Size = 38;
+	textLine2 = "Table 1";
+	textLine2Size = 16;
+	textLine3 = "#1";
+	textLine3Size = textSize;
+	textLine4 = "Four";
+	textLine4Size = textSize;
+*/
+
 
 $fn = 60;
 
