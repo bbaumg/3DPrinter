@@ -22,6 +22,7 @@
 /****** Variables ******************************************************
 ***********************************************************************/
 
+
 // Special variables
 $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
 
@@ -31,6 +32,30 @@ include <modules/Modules.scad>
 
 // Calculations
 
+
 /****** The Object *****************************************************
 ***********************************************************************/
+object();
+
+module object(){
+	
+	
+}
+
+
+
+/****** Batch Export***************************************************
+	Use this module to create multiple exports based on rerenderd values
+	https://github.com/18107/OpenSCAD-batch-export-stl
+	<modules/export.py>
+	
+	This script searches for "module export()" and individually renders
+	and exports each item in it. Each item is expected to be on its own line. 
+	The file name will be the comment on the same line, or the module 
+	call if no comment exists. All files will be put in a folder with 
+	the same name as the scad file it's created from.
+***********************************************************************/
+module export() {
+	//object(x); //file name here.
+}
 
