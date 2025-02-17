@@ -23,7 +23,8 @@
 	Create a hole specifically for a screw to go in.
 ***********************************************************************/
 //screwHole();
-module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5){
+module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5, s=$fn){
+	$fn = s;
 	// Common size screws
 	
     translate([0,0,-headTaper])cylinder(d1=screwHole, d2=screwHead, h = headTaper, $fn=20);
@@ -40,7 +41,17 @@ module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3,
 //roundedCube(x=50, y=30, z=20, r=5, xyz="y");
 //roundedCube(x=50, y=30, z=20, r=5, xyz="z");
 //roundedCube(x=50, y=30, z=20, r=5, xyz="all");
-module roundedCube(x=50, y=30, z=20, r=5, xyz="z"){
+//roundedCube(x=50, y=30, z=20, r=5, xyz="all", s=60);
+//roundedCube(x=50, y=30, z=20, r=5, xyz="all", s=$fn);
+module roundedCube(x=50, y=30, z=20, r=5, xyz="z", s=$fn){
+	/* variable definitions
+			x = value for x axis
+			y = value for y axis
+			z = value for z axis
+			r = radius
+			xyz = axis to have the sides rounded
+	*/
+	$fn = s;
 	hull(){
 		if (xyz == "z") {
 			translate([r,r,0])cylinder(h=z, r=r);
