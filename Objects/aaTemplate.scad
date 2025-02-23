@@ -31,7 +31,7 @@ $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
 ***********************************************************************/
 include <modules/Modules.scad>
 
-// Calculations
+// Global Calculations
 
 
 /****** The Object *****************************************************
@@ -39,9 +39,17 @@ include <modules/Modules.scad>
 object();
 
 module object(){
+	// Rendered Calculations
 	
+	// Start creating the object
 	
 }
+
+/*Some basic commands
+translate([0,0,0])
+rotate([0,0,0])
+cube([0,0,0]);
+*/
 
 
 
