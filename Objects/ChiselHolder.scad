@@ -43,26 +43,23 @@ include <modules/Modules.scad>
 
 // Global Calculations
 toolWidth = toolDiameter + toolWall*2;
-echo(toolWidth);
+echo("Tool Width:", toolWidth);
 
 /****** The Object *****************************************************
 ***********************************************************************/
 object();
 
 module object(toolCount = toolCount){
-	// Calculations
-	mountWidth = (toolWidth + toolSpacing) * toolCount + toolSpacing;
-	echo(mountWidth);
 	// Rendered Calculations
-  translate([0,filletRadius,0])
-    difference(){
-      translate([-toolSpacing,-mountThick,0])
-        roundedCube(x=mountWidth, y=mountThick, z=mountHeight, r=filletRadius, xyz="all");
+	mountWidth = (toolWidth + toolSpacing) * toolCount + toolSpacing;
+	echo("Mount Width: ", mountWidth);
+	translate([0,filletRadius,0])
+		difference(){
+			translate([-toolSpacing,-mountThick,0])
+				roundedCube(x=mountWidth, y=mountThick, z=mountHeight, r=filletRadius, xyz="all");
 			#translate([-toolSpacing+screwHole*2,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
 			#translate([mountWidth-screwHole*2-toolSpacing,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
-      //#translate([screwHole*2,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
-      //#translate([mountWidth-screwHole*2,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
-    }
+		}
 	for (i = [0:1:toolCount-1]){
 		toolHolder(i);
 	}
@@ -102,14 +99,23 @@ cube([0,0,0])
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-	object(3); //ChiselHolder-3
-	object(4); //ChiselHolder-4
-	object(5); //ChiselHolder-5
-	object(6); //ChiselHolder-6
-	object(7); //ChiselHolder-7
-	object(8); //ChiselHolder-8
-	object(9); //ChiselHolder-9
-	object(10); //ChiselHolder-10
-	object(11); //ChiselHolder-11
+	objectExport(3); //ChiselHolder-3
+	objectExport(4); //ChiselHolder-4
+	objectExport(5); //ChiselHolder-5
+	objectExport(6); //ChiselHolder-6
+	objectExport(7); //ChiselHolder-7
+	objectExport(8); //ChiselHolder-8
+	objectExport(9); //ChiselHolder-9
+	objectExport(10); //ChiselHolder-10
+	objectExport(11); //ChiselHolder-11
+}
+
+// Calls this to make minor tweaks for batch rendering
+//   e.g. rotation of the object for best viewing
+module objectExport(toolCount){
+	echo("Rendering Export");
+	// Allows for rotation of object for best orientation of STL file
+	//    Likely need to rotate 90-180 on z axis.
+	rotate([0,0,180])object(toolCount);
 }
 

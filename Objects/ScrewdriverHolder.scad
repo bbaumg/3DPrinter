@@ -116,27 +116,19 @@ module longArm(){
 
 ***********************************************************************/
 module export() {
-	object(4); //ScrewdriverHolder-4
-	object(5); //ScrewdriverHolder-5
-	object(6); //ScrewdriverHolder-6
-	object(7); //ScrewdriverHolder-7
-	object(8); //ScrewdriverHolder-8
-	object(9); //ScrewdriverHolder-9
-	object(10); //ScrewdriverHolder-10
-	object(11); //ScrewdriverHolder-11
+	objectExport(4); //ScrewdriverHolder-4
+	objectExport(5); //ScrewdriverHolder-5
+	objectExport(6); //ScrewdriverHolder-6
+	objectExport(7); //ScrewdriverHolder-7
+	objectExport(8); //ScrewdriverHolder-8
+	objectExport(9); //ScrewdriverHolder-9
+	objectExport(10); //ScrewdriverHolder-10
+	objectExport(11); //ScrewdriverHolder-11
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+module objectExport(var1){
+	echo("Rendering Export");
+	// Allows for rotation of object for best orientation of STL file
+	//    Likely need to rotate 90-180 on z axis.
+	rotate([0,0,180])object(var1);
+}

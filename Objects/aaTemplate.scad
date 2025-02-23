@@ -65,6 +65,16 @@ cube([0,0,0]);
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-	//object(x); //file name here.
+	//objectExport(x); //file name here.
 }
+
+// Calls this to make minor tweaks for batch rendering
+//   e.g. rotation of the object for best viewing
+module objectExport(var1){
+	echo("Rendering Export");
+	// Allows for rotation of object for best orientation of STL file
+	//    Likely need to rotate 90-180 on z axis.
+	rotate([0,0,0])object(var1);
+}
+
 
