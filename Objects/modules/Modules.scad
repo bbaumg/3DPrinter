@@ -15,6 +15,8 @@
 		01/25/2024	Initial creation
 		02/17/2025	Added modules for roundedCube, roundedCylinder
 								and FilletedCylinder
+		02/23/2025	refactored filletedCylinder to include tapered cylinders
+								reference filletedCylinderV1 to see original
 
 */
 
@@ -98,35 +100,89 @@ module roundedCylinder(d=200, h=100, r=5, s=$fn){
 ******* Module - filletedCylinder
 	Create a cylinder with flared top and/or bottoms.
 	Used for making rounded top/bottom holes in objects.
+	Usage:
+		d = diamater
+		td = top diamater.  d will be used if not provided
+		dd = bottom diamater.  d will be used if not provided
+		h = height
+		r = radius of the fillet
+		tr = top radius.  r will be used if not provided
+		br = bottom radius.  r will be used if not provided
+		pad = filler around the radius  5 is usually good unless very small
+		s = smoothing.  generally let $fn of the object do the work.
 ***********************************************************************/
 //filletedCylinder();
+//filletedCylinder(d=50, h=100, r=5, pad=5, s=$fn);
 //filletedCylinder(d=10, h=20, tr=1, br=1, pad=.1, s=60);
+//difference(){roundedCylinder();filletedCylinder();}
 //difference(){roundedCylinder(d=200, h=100, r=5);filletedCylinder(d=50, h=100, tr=10, br=5, pad=5);}
 //difference(){roundedCylinder(d=20, h=10, r=1, s=30);filletedCylinder(d=5, h=10, tr=2, br=1, pad=0, s=30);}
-module filletedCylinder(d=50, h=100, tr=10, br=5, pad=5, s=$fn){
+//filletedCylinder(d=50, td=20, bd=60, h=100, tr=10, br=5, pad=5, s=$fn);
+//difference(){roundedCylinder(s=60);filletedCylinder(d=50, td=50, bd=20, h=100, tr=10, br=5, pad=5, s=$fn);}
+module filletedCylinder(d=50, td=0, bd=0, h=100, tr=0, br=0, r=5, pad=5, s=$fn){
 	$fn = s;
 	shift = .1;
-	translate([0,0,-shift])cylinder(h=h+shift*2, r=d/2);
-	if ( br > 0 ){
+
+	// Calulate for one or two radises
+	tRad = tr > 0 ? tr : r;
+	bRad = br > 0 ? br : r;
+	//echo(tRad, bRad);
+
+	// Calculate for one diamater or two.
+	tDia = td > 0 ? td : d;
+	bDia = bd > 0 ? bd : d;
+	//echo(tDia, bDia);
+
+	// Calculate the shift of the radius in due to angle of a cone
+  trShift = tDia > bDia ? tRad * tan(atan(((tDia/2)-(bDia/2))/h)) : 0;
+	brShift = bDia > tDia ? bRad * tan(atan(((bDia/2)-(tDia/2))/h)) : 0;
+	//echo(trShift, brShift);
+
+	translate([0,0,-shift])cylinder(h=h+shift*2, r1=bDia/2, r2=tDia/2);
+	if ( bRad > 0 ){
 		// bottom
 		translate([0,0,-shift])
 			difference(){
-				rotate_extrude()translate([d/2-pad,0,0])square([br+pad, br]);
-				rotate_extrude()translate([d/2+br,br,0])circle(r=br);
+				rotate_extrude()translate([bDia/2-pad-brShift,0,0])square([bRad+pad, bRad]);
+				rotate_extrude()translate([bDia/2+bRad-brShift,bRad,0])circle(r=bRad);
 			}
 	}
-	if ( tr > 0 ){
+	if ( tRad > 0 ){
 		// top
-		translate([0,0,h-tr+shift])
+		translate([0,0,h-tRad+shift])
 			difference(){
-				rotate_extrude()translate([d/2-pad,0,0])square([tr+pad, tr]);
-				rotate_extrude()translate([d/2+tr,0,0])circle(r=tr);
+				rotate_extrude()translate([tDia/2-pad-trShift,0,0])square([tRad+pad, tRad]);
+				rotate_extrude()translate([tDia/2+tRad-trShift,0,0])circle(r=tRad);
 			}
 	}
 }
 
+		// v1 kept for reference.  No longer used
+		// module filletedCylinderV1(d=50, h=100, tr=10, br=5, pad=5, s=$fn){
+		// 	$fn = s;
+		// 	shift = .1;
+		// 	translate([0,0,-shift])cylinder(h=h+shift*2, r=d/2);
+		// 	if ( br > 0 ){
+		// 		// bottom
+		// 		translate([0,0,-shift])
+		// 			difference(){
+		// 				rotate_extrude()translate([d/2-pad,0,0])square([br+pad, br]);
+		// 				rotate_extrude()translate([d/2+br,br,0])circle(r=br);
+		// 			}
+		// 	}
+		// 	if ( tr > 0 ){
+		// 		// top
+		// 		translate([0,0,h-tr+shift])
+		// 			difference(){
+		// 				rotate_extrude()translate([d/2-pad,0,0])square([tr+pad, tr]);
+		// 				rotate_extrude()translate([d/2+tr,0,0])circle(r=tr);
+		// 			}
+		// 	}
+		// }
+
 /***********************************************************************
 ******* Module - CylinderFillet
+	Fillet the outter circumfrence of a cylinder.
 ***********************************************************************/
 //difference(){cylinder(h=20, d=100);cylinderFillet(d = 100, r=5);}
 /*difference(){
