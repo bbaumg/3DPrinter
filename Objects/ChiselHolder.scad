@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:  Hold chsels on a the wall
-	GitHub:		
+	GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/ChiselHolder.scad
 	
 	History:	
 		02/22/2025	Initial creation
@@ -44,14 +44,15 @@ include <modules/Modules.scad>
 // Global Calculations
 toolWidth = toolDiameter + toolWall*2;
 echo(toolWidth);
-mountWidth = (toolWidth + toolSpacing) * toolCount + toolSpacing;
-echo(mountWidth);
 
 /****** The Object *****************************************************
 ***********************************************************************/
 object();
 
-module object(){
+module object(toolCount = toolCount){
+	// Calculations
+	mountWidth = (toolWidth + toolSpacing) * toolCount + toolSpacing;
+	echo(mountWidth);
 	// Rendered Calculations
   translate([0,filletRadius,0])
     difference(){
@@ -60,27 +61,24 @@ module object(){
       #translate([screwHole*2,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
       #translate([mountWidth-screwHole*2,filletRadius,mountHeight-screwHole*2])rotate([90,0,0])cylinder(d=screwHole, h=mountThick+2);
     }
-	toolHolder();
-	// Start creating the object
-
-  // Create the mounting plate
+	for (i = [0:1:toolCount-1]){
+		toolHolder(i);
+	}
 }
 
-module toolHolder(){
-  for (i = [0:1:toolCount-1]){
-    difference(){
-      translate([toolWall+(toolWidth + toolSpacing)* i,0,0])roundedCube(x=toolDiameter, y=toolSpacing+toolWall, z=toolHeight, r=filletRadius, xyz="y");
-      translate([toolWidth/2+(toolWidth + toolSpacing)* i,toolWidth/2+toolSpacing,-1])cylinder(d=toolDiameter+toolWall, h=toolHeight+2);
-    }
-    translate([toolWidth/2,0,0]){
-      translate([(toolWidth + toolSpacing)* i,toolWidth/2+toolSpacing,0])
-        difference(){
-          roundedCylinder(d=toolDiameter+toolWall*2, h=toolHeight, r=1, s=60);
-          filletedCylinder(td=toolDiameter, bd=toolDiameter-toolTaper, h=toolHeight, tr=2, br=1, pad=0, s=$fn);
-          translate([-toolOpening/2,0,-1])cube([toolOpening,toolWall*4,toolHeight+2]);
-        }
-    }
-  }
+module toolHolder(i){
+	difference(){
+		translate([toolWall+(toolWidth + toolSpacing)* i,0,0])roundedCube(x=toolDiameter, y=toolSpacing+toolWall, z=toolHeight, r=filletRadius, xyz="y");
+		translate([toolWidth/2+(toolWidth + toolSpacing)* i,toolWidth/2+toolSpacing,-1])cylinder(d=toolDiameter+toolWall, h=toolHeight+2);
+	}
+	translate([toolWidth/2,0,0]){
+		translate([(toolWidth + toolSpacing)* i,toolWidth/2+toolSpacing,0])
+			difference(){
+				roundedCylinder(d=toolDiameter+toolWall*2, h=toolHeight, r=1, s=60);
+				filletedCylinder(td=toolDiameter, bd=toolDiameter-toolTaper, h=toolHeight, tr=2, br=1, pad=0, s=$fn);
+				translate([-toolOpening/2,0,-1])cube([toolOpening,toolWall*4,toolHeight+2]);
+			}
+	}
 }
 
 /*Some basic commands
@@ -102,6 +100,14 @@ cube([0,0,0])
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-	//object(x); //file name here.
+	object(3); //ChiselHolder-3
+	object(4); //ChiselHolder-4
+	object(5); //ChiselHolder-5
+	object(6); //ChiselHolder-6
+	object(7); //ChiselHolder-7
+	object(8); //ChiselHolder-8
+	object(9); //ChiselHolder-9
+	object(10); //ChiselHolder-10
+	object(11); //ChiselHolder-11
 }
 
