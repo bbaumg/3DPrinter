@@ -1,0 +1,5 @@
+Don't try the install button...  It does not work for OpenSCAD.
+
+copy files to /usr/local/share/fonts
+
+Then restart OpenSCAD
