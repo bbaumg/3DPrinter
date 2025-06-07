@@ -106,7 +106,7 @@ module sideWall(textString = "", overallWidth = 1){
 
 /****** Batch Export***************************************************
 	Use this module to create multiple exports based on rerenderd values
-	https://github.com/18107/OpenSCAD-batch-export-stl
+	https://github.com/bbaumg/3DPrinter/blob/master/export.py
 	<modules/export.py>
 	
 	This script searches for "module export()" and individually renders
