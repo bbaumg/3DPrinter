@@ -67,7 +67,7 @@ difference(){}
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-	//objectExport(x); //file name here.
+	//objectExport(x); //<filename.stl>
 }
 
 // Calls this to make minor tweaks for batch rendering
