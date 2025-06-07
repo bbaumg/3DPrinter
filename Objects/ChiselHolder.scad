@@ -106,8 +106,6 @@ module export() {
 	objectExport(7); //ChiselHolder-7
 	objectExport(8); //ChiselHolder-8
 	objectExport(9); //ChiselHolder-9
-	objectExport(10); //ChiselHolder-10
-	objectExport(11); //ChiselHolder-11
 }
 
 // Calls this to make minor tweaks for batch rendering

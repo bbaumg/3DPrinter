@@ -22,7 +22,8 @@
 
 /****** Variables ******************************************************
 ***********************************************************************/
-
+varA = 0;						//
+varA = 0;						//
 
 // Special variables
 $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
@@ -49,6 +50,7 @@ module object(){
 translate([0,0,0])
 rotate([0,0,0])
 cube([0,0,0]);
+difference(){}
 */
 
 
@@ -76,5 +78,3 @@ module objectExport(var1){
 	//    Likely need to rotate 90-180 on z axis.
 	rotate([0,0,0])object(var1);
 }
-
-

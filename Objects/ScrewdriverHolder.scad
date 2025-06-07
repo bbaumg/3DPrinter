@@ -116,6 +116,7 @@ module longArm(){
 
 ***********************************************************************/
 module export() {
+	objectExport(3); //ScrewdriverHolder-3
 	objectExport(4); //ScrewdriverHolder-4
 	objectExport(5); //ScrewdriverHolder-5
 	objectExport(6); //ScrewdriverHolder-6

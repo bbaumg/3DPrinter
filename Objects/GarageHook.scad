@@ -114,23 +114,44 @@ module fillet(radius = 1, height = 1){
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-	object(20, 60); //GarageHook - 20x60
-	object(20, 80); //GarageHook - 20x80
-	object(20, 100); //GarageHook - 20x100
-	object(30, 60); //GarageHook - 30x60
-	object(30, 80); //GarageHook - 30x80
-	object(30, 100); //GarageHook - 30x100
-	object(40, 60); //GarageHook - 40x60
-	object(40, 80); //GarageHook - 40x80
-	object(40, 100); //GarageHook - 40x100
-	object(50, 80); //GarageHook - 50x80
-	object(50, 100); //GarageHook - 50x100
-	object(50, 120); //GarageHook - 50x120
-	object(60, 80); //GarageHook - 60x80
-	object(60, 100); //GarageHook - 60x100
-	object(60, 120); //GarageHook - 60x120
-	object(70, 80); //GarageHook - 70x80
-	object(70, 100); //GarageHook - 70x100
-	object(70, 120); //GarageHook - 70x120
+	objectExport(20, 40); //GarageHook - 20x40
+	objectExport(20, 60); //GarageHook - 20x60
+	objectExport(20, 80); //GarageHook - 20x80
+	objectExport(20, 100); //GarageHook - 20x100
+	objectExport(20, 120); //GarageHook - 20x120
+	objectExport(30, 40); //GarageHook - 30x40
+	objectExport(30, 60); //GarageHook - 30x60
+	objectExport(30, 80); //GarageHook - 30x80
+	objectExport(30, 100); //GarageHook - 30x100
+	objectExport(30, 120); //GarageHook - 30x120
+	objectExport(40, 40); //GarageHook - 40x40
+	objectExport(40, 60); //GarageHook - 40x60
+	objectExport(40, 80); //GarageHook - 40x80
+	objectExport(40, 100); //GarageHook - 40x100
+	objectExport(40, 120); //GarageHook - 40x120
+	objectExport(50, 60); //GarageHook - 50x60
+	objectExport(50, 80); //GarageHook - 50x80
+	objectExport(50, 100); //GarageHook - 50x100
+	objectExport(50, 120); //GarageHook - 50x120
+	objectExport(60, 40); //GarageHook - 60x40
+	objectExport(60, 60); //GarageHook - 60x60
+	objectExport(60, 80); //GarageHook - 60x80
+	objectExport(60, 100); //GarageHook - 60x100
+	objectExport(60, 120); //GarageHook - 60x120
+	objectExport(70, 80); //GarageHook - 70x80
+	objectExport(70, 100); //GarageHook - 70x100
+	objectExport(70, 120); //GarageHook - 70x120
+	objectExport(80, 80); //GarageHook - 80x80
+	objectExport(80, 100); //GarageHook - 80x100
+	objectExport(80, 120); //GarageHook - 80x120
 }
 
+// Calls this to make minor tweaks for batch rendering
+//   e.g. rotation of the object for best viewing
+module objectExport(var1, var2){
+	echo("Rendering Export");
+	// Allows for rotation of object for best orientation of STL file
+	//    Likely need to rotate 90-180 on z axis.
+	rotate([0,0,270])object(var1, var2);
+}
+	objectExport(70, 120); //GarageHook - 70x120
