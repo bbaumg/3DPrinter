@@ -1,0 +1,6 @@
+Use OpenSCAD nightly builds for best performance
+
+Setting up VS Code:
+	Install the "OpenSCAD" extension
+	Configure the launch path for nightly builds
+		File > Preference > Settings ... Extensions > OpenSCAD > Launch Path = openscad-nightly
