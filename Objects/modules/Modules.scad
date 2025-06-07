@@ -87,12 +87,26 @@ module roundedCube(x=50, y=30, z=20, r=5, xyz="z", s=$fn){
 ***********************************************************************/
 //roundedCylinder();
 //roundedCylinder(d=200, h=100, r=5);
+//roundedCylinder(td=100, bd=100, tr= 10, br = .1);
 //difference(){roundedCylinder(d=20, h=10, r=1, s=60);filletedCylinder(d=5, h=10, tr=2, br=1, pad=0, s=30);}
-module roundedCylinder(d=200, h=100, r=5, s=$fn){
+module roundedCylinder(d=200, td=0, bd=0, h=100, r=5, tr=0, br=0, s=$fn){
 	$fn = s;
+
+	// Calulate for one or two radises
+	tRad = tr > 0 ? tr : r;
+	bRad = br > 0 ? br : r;
+	//echo(tRad, bRad);
+
+	// Calculate for one diamater or two.
+	tDia = td > 0 ? td : d;
+	bDia = bd > 0 ? bd : d;
+	//echo(tDia, bDia);
+
 	hull(){
-		translate([0,0,r])rotate_extrude()translate([d/2-r,0,0])circle(r=r);
-		translate([0,0,h-r])rotate_extrude()translate([d/2-r,0,0])circle(r=r);
+		//Bottom
+		translate([0,0,bRad])rotate_extrude()translate([bDia/2-bRad,0,0])circle(r=bRad);
+		//Top
+		translate([0,0,h-tRad])rotate_extrude()translate([tDia/2-tRad,0,0])circle(r=tRad);
 	}
 }
 
