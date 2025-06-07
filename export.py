@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:    Render multiple 3d files from an OpenSCAD file.
-	GitHub:     
+	GitHub:     https://github.com/bbaumg/3DPrinter/blob/master/export.py
 	
 	History:	
 		06/07/2025	Initial creation as clone
