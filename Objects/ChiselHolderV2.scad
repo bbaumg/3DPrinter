@@ -23,27 +23,32 @@
 /****** Variables ******************************************************
 ***********************************************************************/
 // Can be sized to hold chisels with multiple base sizes (like Narex)
-SizeADiameter = 23;				//
-SizeASlot = 15;						//
-SizeAQty = 2;							//
-SizeBDiameter = 21;				//
-SizeBSlot = 13;						//
-SizeBQty = 2;							//
-SizeCDiameter = 18;				//
-SizeCSlot = 8;						//
-SizeCQty = 2;							//
-SizeDDiameter = 14;				//
-SizeDSlot = 6;						//
-SizeDQty = 2;							//
-HolderDepth = 15;					// Depth of the part holding the chisel
+SizeADiameter = 23;				// Size of the hole
+SizeASlot = 15;						// Size of the opening
+SizeAQty = 2;							// Quantity
+
+SizeBDiameter = 21;				// Size of the hole
+SizeBSlot = 13;						// Size of the opening
+SizeBQty = 2;							// Quantity
+
+SizeCDiameter = 18;				// Size of the hole
+SizeCSlot = 8;						// Size of the opening
+SizeCQty = 0;							// Quantity
+
+SizeDDiameter = 14;				// Size of the hole
+SizeDSlot = 6;						// Size of the opening
+SizeDQty = 0;							// Quantity
+
+HolderDepth = 16;					// Depth of the part holding the chisel
 HolderWall = 5;						// Wall thickness for each holder
 HolderSpacing = 10;				// Spacing between each holder
-HolderOffset = 10;				// Distance from the back wall
-WallAbove = 15;						// Wall Above
-WallBelow = 15;						// Wall Below
+HolderOffset = 7;				// Distance from the back wall
+
+WallAbove = 20;						// Wall Above
 WallSides = 15;						// Wall Sides
+WallThickness = 4;				// Thickness of the mounting wall
 
-
+ScrewHole = 4;						// Diameter of the screw holes
 
 // Special variables
 $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
@@ -74,22 +79,22 @@ module object(){
 	SizeDTotalSpacing = (SizeDTotalDiameter + HolderSpacing) * SizeDQty;
 	SizeDTotalBackOffset = -SizeDTotalDiameter/2 - HolderOffset;
 	TotalAWidth = (SizeATotalDiameter + HolderSpacing) * SizeAQty - HolderSpacing; echo("TotalAWidth" , TotalAWidth);
-	//TotalBWidth = (HolderSpacing + SizeBTotalDiameter) * SizeBQty; echo("TotalBWidth" , TotalBWidth);
-	TotalBWidth = (HolderSpacing);
+	TotalBWidth = (HolderSpacing + SizeBTotalDiameter) * SizeBQty; echo("TotalBWidth" , TotalBWidth);
 	TotalCWidth = (SizeCTotalDiameter + HolderSpacing) * SizeCQty; echo("TotalCWidth" , TotalCWidth);
 	TotalDWidth = (SizeDTotalDiameter + HolderSpacing) * SizeDQty; echo("TotalDWidth" , TotalDWidth);
-	//WallLeftStart = -SizeATotalDiameter/2-WallSides;
-	WallLeftStart = -SizeATotalDiameter/2;
-	//WallLenghtSpan = SizeATotalDiameter + HolderSpacing + SizeATotalDiameter + HolderSpacing;
-	WallLenghtSpan = (TotalAWidth + TotalBWidth );// + TotalCWidth + TotalDWidth);
-	//WallLenghtSpan = (TotalAWidth + TotalBWidth + TotalCWidth + TotalDWidth) + (WallSides*2);
-	//WallLenghtSpan = TotalAWidth + TotalBWidth;
-	echo("WallLenghtSpan" , WallLenghtSpan);
+	WallLenghtSpan = (TotalAWidth + TotalBWidth + TotalCWidth + TotalDWidth) + WallSides * 2;
+	WallHeight = HolderDepth + WallAbove;
 
 	// Start creating the object
 
-	// Temp back wall
-	translate([WallLeftStart,0,0])cube([WallLenghtSpan,1,20]);
+	// Mounting Wall
+	difference(){
+		translate([-WallSides,-1,0])roundedCube(x=WallLenghtSpan, y=WallThickness, z=WallHeight, r=1, xyz="all");
+		translate([-WallSides+ScrewHole*1.5,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
+		translate([WallLenghtSpan/2-WallSides,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
+		translate([WallLenghtSpan-WallSides-ScrewHole*1.5,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
+	}
+
 	// A
 	for (i = [0:SizeAQty-1]){
 		translate([SizeATotalDiameter/2,0,0])

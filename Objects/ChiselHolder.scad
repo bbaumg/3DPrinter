@@ -22,12 +22,12 @@
 
 /****** Variables ******************************************************
 ***********************************************************************/
-toolCount = 3;             // Number of chisels
-toolDiameter = 16;          // Diamater of the mount holding the chisel
+toolCount = 4;             // Number of chisels
+toolDiameter = 14;          // Diamater of the mount holding the chisel
 toolHeight = 8;
-toolTaper = 3;              // About how much narrower is the tool at the bottom of hight
-toolOpening = 11;           // Width of the opening the slide the chisel in
-toolSpacing = 6;            // Spaceing between chisels
+toolTaper = 2;              // About how much narrower is the tool at the bottom of hight
+toolOpening = 10;           // Width of the opening the slide the chisel in
+toolSpacing = 11;            // Spaceing between chisels
 toolWall = 5;
 mountHeight = 40;							// How tall should the mounting plate be
 mountThick = 4;								// How thick should the mounting plate be
