@@ -1,0 +1,4 @@
+Simple Cable Anchors (FRC) by LittlestBits on Thingiverse: https://www.thingiverse.com/thing:4913175
+
+Summary:
+--Simple, Rail, Square (First two of my own design, last closely modelled on official anchor)--Three quick cable management parts that were specifically designed for cable management on an FRC robot, given tight budgets and the fact that most teams have access to a 3d printer. Quick, easy print, get those cables mounted without a trip to the hardware store.Simple is an elongated c-shape with holes on end for screwsRail is a groove with a mounting hole off to the side, and through-holes for zip-tiesSquare is the ubiquitous zip-tie anchor with a centered mounting hole, common in stores.
