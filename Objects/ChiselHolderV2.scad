@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:  Printable holder for woodworking chisles (designed for 4 piece narex set)
-	GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/ChiselHolderV2.scad
+		GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/ChiselHolderV2.scad
 	
 	History:	
 		08/30/2025	Initial creation
@@ -42,7 +42,7 @@ SizeDQty = 0;							// Quantity
 HolderDepth = 16;					// Depth of the part holding the chisel
 HolderWall = 5;						// Wall thickness for each holder
 HolderSpacing = 10;				// Spacing between each holder
-HolderOffset = 7;				// Distance from the back wall
+HolderOffset = 7;					// Distance from the back wall
 
 WallAbove = 20;						// Wall Above
 WallSides = 15;						// Wall Sides
@@ -69,19 +69,24 @@ module object(){
 	SizeATotalDiameter = SizeADiameter + (HolderWall *2); echo("SizeATotalDiameter", SizeATotalDiameter);
 	SizeATotalSpacing = (SizeATotalDiameter + HolderSpacing) * SizeAQty; echo("SizeATotalSpacing", SizeATotalSpacing);
 	SizeATotalBackOffset = -SizeATotalDiameter/2 - HolderOffset;
+
 	SizeBTotalDiameter = SizeBDiameter + (HolderWall *2); echo("SizeBTotalDiameter" , SizeBTotalDiameter);
 	SizeBTotalSpacing = (SizeBTotalDiameter + HolderSpacing) * SizeBQty;
 	SizeBTotalBackOffset = -SizeBTotalDiameter/2 - HolderOffset;
+	
 	SizeCTotalDiameter = SizeCDiameter + (HolderWall *2); echo("SizeCTotalDiameter" , SizeCTotalDiameter);
 	SizeCTotalSpacing = (SizeCTotalDiameter + HolderSpacing) * SizeCQty;
 	SizeCTotalBackOffset = -SizeCTotalDiameter/2 - HolderOffset;
+	
 	SizeDTotalDiameter = SizeDDiameter + (HolderWall *2); echo("SizeDTotalDiameter" , SizeDTotalDiameter);
 	SizeDTotalSpacing = (SizeDTotalDiameter + HolderSpacing) * SizeDQty;
 	SizeDTotalBackOffset = -SizeDTotalDiameter/2 - HolderOffset;
+	
 	TotalAWidth = (SizeATotalDiameter + HolderSpacing) * SizeAQty - HolderSpacing; echo("TotalAWidth" , TotalAWidth);
 	TotalBWidth = (HolderSpacing + SizeBTotalDiameter) * SizeBQty; echo("TotalBWidth" , TotalBWidth);
 	TotalCWidth = (SizeCTotalDiameter + HolderSpacing) * SizeCQty; echo("TotalCWidth" , TotalCWidth);
 	TotalDWidth = (SizeDTotalDiameter + HolderSpacing) * SizeDQty; echo("TotalDWidth" , TotalDWidth);
+	
 	WallLenghtSpan = (TotalAWidth + TotalBWidth + TotalCWidth + TotalDWidth) + WallSides * 2;
 	WallHeight = HolderDepth + WallAbove;
 
@@ -89,9 +94,13 @@ module object(){
 
 	// Mounting Wall
 	difference(){
+		// Back wall
 		translate([-WallSides,-1,0])roundedCube(x=WallLenghtSpan, y=WallThickness, z=WallHeight, r=1, xyz="all");
+		// left hole
 		translate([-WallSides+ScrewHole*1.5,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
+		// middle hole
 		translate([WallLenghtSpan/2-WallSides,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
+		// right hole
 		translate([WallLenghtSpan-WallSides-ScrewHole*1.5,WallThickness,WallHeight-ScrewHole*1.5])#rotate([90,0,0])cylinder(d=ScrewHole, h=WallThickness*2);
 	}
 
@@ -114,6 +123,7 @@ module object(){
 				translate([-SizeASlot/2,-SizeATotalDiameter/2,-.1])cube([SizeASlot,SizeATotalDiameter/2,HolderDepth+.2]);
 			}
 	}
+
 	// B
 	for (i = [0:SizeBQty-1]){
 		translate([SizeATotalSpacing,0,0])
@@ -135,7 +145,8 @@ module object(){
 			}
 		echo(SizeATotalSpacing);
 		echo(i*(SizeBTotalDiameter + HolderSpacing));
-}
+	}
+
 	// C
 	for (i = [0:SizeCQty-1]){
 		translate([SizeATotalSpacing + SizeBTotalSpacing,0,0])
@@ -156,6 +167,7 @@ module object(){
 				translate([-SizeCSlot/2,-SizeCTotalDiameter/2,-.1])cube([SizeCSlot,SizeCTotalDiameter/2,HolderDepth+.2]);
 			}
 	}
+	
 	// D
 	for (i = [0:SizeDQty-1]){
 		translate([SizeATotalSpacing + SizeBTotalSpacing + SizeCTotalSpacing,0,0])
