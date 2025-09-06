@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:  Printable holder for woodworking chisles (designed for 4 piece narex set)
-	GitHub:		
+	GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/ChiselHolderV2.scad
 	
 	History:	
 		08/30/2025	Initial creation
@@ -210,85 +210,3 @@ module objectExport(var1){
 	//    Likely need to rotate 90-180 on z axis.
 	rotate([0,0,0])object(var1);
 }
-
-
-/* BAckup Copy
-	// A
-	for (i = [0:SizeAQty-1]){
-		translate([i*(SizeATotalDiameter + HolderSpacing),SizeATotalBackOffset,0])
-			difference(){
-				// Create the holder body
-				union(){
-					// Rounded portion
-					roundedCylinder(h=HolderDepth,d=SizeATotalDiameter, r=1);
-					// Square portion to back wall
-					translate([-(SizeATotalDiameter/2),0,0])
-						roundedCube(x=SizeATotalDiameter, y=HolderOffset+SizeATotalDiameter/2, z=HolderDepth, r=1, xyz="y");
-				}
-				// remove the hole
-				filletedCylinder(d=SizeADiameter, h=HolderDepth, r=1, pad=1, s=$fn);
-				// remove the slot
-				translate([-SizeASlot/2,-SizeATotalDiameter/2,-.1])cube([SizeASlot,SizeATotalDiameter/2,HolderDepth+.2]);
-			}
-	}
-	// B
-	for (i = [0:SizeBQty-1]){
-		translate([SizeATotalSpacing,0,0])
-		translate([i*(SizeBTotalDiameter + HolderSpacing),SizeBTotalBackOffset,0])
-			difference(){
-				// Create the holder body
-				union(){
-					// Rounded portion
-					roundedCylinder(h=HolderDepth,d=SizeBTotalDiameter, r=1);
-					// Square portion to back wall
-					translate([-(SizeBTotalDiameter/2),0,0])
-						roundedCube(x=SizeBTotalDiameter, y=HolderOffset+SizeBTotalDiameter/2, z=HolderDepth, r=1, xyz="y");
-				}
-				// remove the hole
-				filletedCylinder(d=SizeBDiameter, h=HolderDepth, r=1, pad=1, s=$fn);
-				// remove the slot
-				translate([-SizeBSlot/2,-SizeBTotalDiameter/2,-.1])cube([SizeBSlot,SizeBTotalDiameter/2,HolderDepth+.2]);
-			}
-		echo(SizeATotalSpacing);
-		echo(i*(SizeBTotalDiameter + HolderSpacing));
-}
-	// C
-	for (i = [0:SizeCQty-1]){
-		translate([SizeATotalSpacing + SizeBTotalSpacing,0,0])
-		translate([i*(SizeCTotalDiameter + HolderSpacing),SizeCTotalBackOffset,0])
-			difference(){
-				// Create the holder body
-				union(){
-					// Rounded portion
-					roundedCylinder(h=HolderDepth,d=SizeCTotalDiameter, r=1);
-					// Square portion to back wall
-					translate([-(SizeCTotalDiameter/2),0,0])
-						roundedCube(x=SizeCTotalDiameter, y=HolderOffset+SizeCTotalDiameter/2, z=HolderDepth, r=1, xyz="y");
-				}
-				// remove the hole
-				filletedCylinder(d=SizeBDiameter, h=HolderDepth, r=1, pad=1, s=$fn);
-				// remove the slot
-				translate([-SizeCSlot/2,-SizeCTotalDiameter/2,-.1])cube([SizeCSlot,SizeCTotalDiameter/2,HolderDepth+.2]);
-			}
-	}
-	// D
-	for (i = [0:SizeDQty-1]){
-		translate([SizeATotalSpacing + SizeBTotalSpacing + SizeCTotalSpacing,0,0])
-		translate([i*(SizeDTotalDiameter + HolderSpacing),SizeDTotalBackOffset,0])
-			difference(){
-				// Create the holder body
-				union(){
-					// Rounded portion
-					roundedCylinder(h=HolderDepth,d=SizeDTotalDiameter, r=1);
-					// Square portion to back wall
-					translate([-(SizeDTotalDiameter/2),0,0])
-						roundedCube(x=SizeDTotalDiameter, y=HolderOffset+SizeDTotalDiameter/2, z=HolderDepth, r=1, xyz="y");
-				}
-				// remove the hole
-				filletedCylinder(d=SizeDDiameter, h=HolderDepth, r=1, pad=1, s=$fn);
-				// remove the slot
-				translate([-SizeDSlot/2,-SizeDTotalDiameter/2,-.1])cube([SizeDSlot,SizeDTotalDiameter/2,HolderDepth+.2]);
-			}
-	}
-}
- */
