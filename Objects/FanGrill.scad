@@ -27,16 +27,20 @@
 ***********************************************************************/
 fanSize = 120;					// Options = 60, 80, 92, 120, 140, 200
 wallSize = 4;                   // Thinnest part of perimeter wall
-gridHole = 10;					//
-gridWall = 2.0;					//
+gridHole = 12;					//
+gridWall = 1.9;					//
 thickness = 2.8;				//
-screwDiameter = 4.3;            // Defined standard is 4.3mm
-cornerRadius = 3;               // Default is 3
+counterSinkScrew = true;        //
+cornerRadius = 4;               // Default is 3
+
 // If you want to mount the fan using the grill, use these settings.
-grillMount = "none";           // Options = none, flush, angle
-mountLengh = 50;                // 
-mountScrewOffset = 10;
-mountScrewHole = 5;
+grillMount = "flush";           // Options = none, flush, angle
+mountScrewDiameter = 3.5;       // Diameter of the screw hole
+mountCounterSinkWidth = 6.5;      //
+mountScrewTaper = 2;            //
+mountFlushLength = 50;          // Extra length off bottom
+mountFlushScrewOffset = 10;     // How far in to set the mounting holes
+mountFlushCounterSink = true;  // Countersink the screw holes or not.
 
 
 // Special variables
@@ -75,28 +79,70 @@ module object(fanSize, gridHole, gridWall, grillMount){
 	// Create the main shape
     difference(){
         union(){
+            // Fan frame
             roundedCube(x=fanSize, y=fanSize, z=thickness, r=cornerRadius, xyz="z");
+            // mounting section - no mount
             if (grillMount == "none") {
+            // mounting section - Flush mount
                 echo("No mount selected");
             } else if (grillMount == "flush") {
                 difference(){
-                    translate([0,-mountLengh,0])roundedCube(x=fanSize, y=mountLengh+cornerRadius, z=thickness, r=cornerRadius, xyz="z");
-                    translate([mountScrewOffset,-mountLengh+mountScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewHole);
-                    translate([fanSize-mountScrewOffset,-mountLengh+mountScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewHole);
-                    translate([mountScrewOffset,-mountScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewHole);
-                    translate([fanSize-mountScrewOffset,-mountScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewHole);
+                    translate([0,-mountFlushLength,0])roundedCube(x=fanSize, y=mountFlushLength+cornerRadius*2, z=thickness, r=cornerRadius, xyz="z");
+                    if (mountFlushCounterSink == true){
+                        // Bottom left screw
+                        translate([mountFlushScrewOffset,-mountFlushLength+mountFlushScrewOffset,thickness]) 
+                            screwHole(screwHole=mountScrewDiameter, screwDepth = thickness, screwHead = mountCounterSinkWidth, headTaper = mountScrewTaper);
+                        // Bottom right screw
+                        translate([fanSize-mountFlushScrewOffset,-mountFlushLength+mountFlushScrewOffset,thickness]) 
+                            screwHole(screwHole=mountScrewDiameter, screwDepth = thickness, screwHead = mountCounterSinkWidth, headTaper = mountScrewTaper);
+                        // Top left screw
+                        translate([mountFlushScrewOffset,-mountFlushScrewOffset,thickness]) 
+                            screwHole(screwHole=mountScrewDiameter, screwDepth = thickness, screwHead = mountCounterSinkWidth, headTaper = mountScrewTaper);
+                        // Top right screw
+                        translate([fanSize-mountFlushScrewOffset,-mountFlushScrewOffset,thickness]) 
+                            screwHole(screwHole=mountScrewDiameter, screwDepth = thickness, screwHead = mountCounterSinkWidth, headTaper = mountScrewTaper);
+                    } else {
+                        // Bottom left screw
+                        translate([mountFlushScrewOffset,-mountFlushLength+mountFlushScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewDiameter);
+                        // Bottom right screw
+                        translate([fanSize-mountFlushScrewOffset,-mountFlushLength+mountFlushScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewDiameter);
+                        // Top left screw
+                        translate([mountFlushScrewOffset,-mountFlushScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewDiameter);
+                        // Top right screw
+                        translate([fanSize-mountFlushScrewOffset,-mountFlushScrewOffset,-.1]) cylinder(h = thickness+.2, d = mountScrewDiameter);
+                    }
                 }
+            } else if (grillMount == "angle") {
+                echo("Work in progress");
+            } else {
+                echo("That mount is not an option...  Doing nothing");
             }
         }
         translate([fanSize/2,fanSize/2,-.1]) cylinder(h = thickness+.2, d = cutout);
-        // screw - bottom left
-        translate([screwOffset,screwOffset,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
-        // screw - bottom right
-        translate([screwOffset+screwSpace,screwOffset,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
-        // screw - top left
-        translate([screwOffset,screwOffset+screwSpace,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
-        // screw - top right
-        translate([screwOffset+screwSpace,screwOffset+screwSpace,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
+        if (counterSinkScrew == true) {
+            // Variables that should never need to be changed.
+            screwDiameter = 5;              // All my cases range from 5.0-5.5
+            counterSinkWidth = 6.7;         // size of the head of standard fan screw = 6.5mm
+            screwTaper = 1.5;
+            // screw - bottom left
+            translate([screwOffset,screwOffset,thickness]) screwHole(screwHole=screwDiameter, screwDepth = thickness, screwHead = counterSinkWidth, headTaper = screwTaper);
+            // screw - bottom right
+            translate([screwOffset+screwSpace,screwOffset,thickness]) screwHole(screwHole=screwDiameter, screwDepth = thickness, screwHead = counterSinkWidth, headTaper = screwTaper);
+            // screw - top left
+            translate([screwOffset,screwOffset+screwSpace,thickness]) screwHole(screwHole=screwDiameter, screwDepth = thickness, screwHead = counterSinkWidth, headTaper = screwTaper);
+            // screw - top right
+            translate([screwOffset+screwSpace,screwOffset+screwSpace,thickness]) screwHole(screwHole=screwDiameter, screwDepth = thickness, screwHead = counterSinkWidth, headTaper = screwTaper);
+        } else {
+            // screw - bottom left
+            translate([screwOffset,screwOffset,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
+            // screw - bottom right
+            translate([screwOffset+screwSpace,screwOffset,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
+            // screw - top left
+            translate([screwOffset,screwOffset+screwSpace,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
+            // screw - top right
+            translate([screwOffset+screwSpace,screwOffset+screwSpace,-.1]) cylinder(h=thickness+.2, d = screwDiameter);
+       }
+
     }
     // Add the grid
     intersection(){
@@ -111,6 +157,7 @@ rotate([0,0,0])
 cube([0,0,0]);
 difference(){}
 */
+
 // Create a single hexagon shapped object
 module hex(hole, wall, thick){
     hole = hole;
