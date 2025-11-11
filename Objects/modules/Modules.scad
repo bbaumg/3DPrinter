@@ -27,6 +27,39 @@
 //screwHole();
 module screwHole(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5, s=$fn){
 	$fn = s;
+	// Common size screws	
+		// Taper
+    translate([0,0,-headTaper])cylinder(d1=screwHole, d2=screwHead, h = headTaper);
+		// Shaft
+    translate([0,0,-headTaper-screwDepth+.01])cylinder(d=screwHole, h=screwDepth);
+		// Top of head opening
+    translate([0,0,-.01]) cylinder(d=screwHead, h=screwHeadDepth);
+}
+
+/***********************************************************************
+****** Module - screwCounterPan
+	Create a hole specifically for a screw to go in.
+	!!!!!!! NOT FINISHED
+***********************************************************************/
+//screwCounterPan();
+module screwCounterPan(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5, s=$fn){
+	$fn = s;
+	// Common size screws
+	
+    translate([0,0,-headTaper])cylinder(d1=screwHole, d2=screwHead, h = headTaper, $fn=20);
+    translate([0,0,-headTaper-screwDepth])cylinder(d=screwHole, h=screwDepth, $fn=10);
+    translate([0,0,-headTaper-screwDepth])cylinder(d=screwHole, h=screwDepth, $fn=10);
+    translate([0,0,0]) cylinder(d=screwHead, h=screwHeadDepth, $fn=10);
+}
+
+/***********************************************************************
+****** Module - screwCounterFlush
+	Create a hole specifically for a screw to go in.
+	!!!!!!! NOT FINISHED
+***********************************************************************/
+//screwCounterFlush();
+module screwCounterFlush(screwHole=4.5, screwDepth = 10, screwHead = 9, headTaper = 2.3, screwHeadDepth = 5, s=$fn){
+	$fn = s;
 	// Common size screws
 	
     translate([0,0,-headTaper])cylinder(d1=screwHole, d2=screwHead, h = headTaper, $fn=20);
