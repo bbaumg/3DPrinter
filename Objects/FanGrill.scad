@@ -34,13 +34,18 @@ counterSinkScrew = true;        //
 cornerRadius = 4;               // Default is 3
 
 // If you want to mount the fan using the grill, use these settings.
-grillMount = "flush";           // Options = none, flush, angle
+// Angle is a work in progress
+grillMount = "none";           // Options = none, flush, angle
 mountScrewDiameter = 3.5;       // Diameter of the screw hole
 mountCounterSinkWidth = 6.5;      //
 mountScrewTaper = 2;            //
 mountFlushLength = 50;          // Extra length off bottom
 mountFlushScrewOffset = 10;     // How far in to set the mounting holes
 mountFlushCounterSink = true;  // Countersink the screw holes or not.
+mountAngleType = "outter";            // Options = under, outter
+mountAngleLength = 30;
+mountAngleScrewOffset = 10;     // How far in to set the mounting holes
+mountAngleCounterSink = true;  // Countersink the screw holes or not.
 
 
 // Special variables
@@ -86,6 +91,7 @@ module object(fanSize, gridHole, gridWall, grillMount){
             // mounting section - Flush mount
                 echo("No mount selected");
             } else if (grillMount == "flush") {
+                echo("Type = Flush");
                 difference(){
                     translate([0,-mountFlushLength,0])roundedCube(x=fanSize, y=mountFlushLength+cornerRadius*2, z=thickness, r=cornerRadius, xyz="z");
                     if (mountFlushCounterSink == true){
@@ -113,7 +119,9 @@ module object(fanSize, gridHole, gridWall, grillMount){
                     }
                 }
             } else if (grillMount == "angle") {
-                echo("Work in progress");
+                echo("Type = Angle (NOTE:Work in progress...)");
+                translate([0,0,0])rotate([90,0,0])roundedCube(x=fanSize, y=mountAngleLength, z=thickness, r=cornerRadius, xyz="z");
+
             } else {
                 echo("That mount is not an option...  Doing nothing");
             }
@@ -193,27 +201,41 @@ module hexgrid(box, holediameter, wallthickness) {
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
-    objectExport(60, 10, 1.9, "none"); //FanGrid-60mm.stl
-    objectExport(70, 10, 1.9, "none"); //FanGrid-70mm.stl
-    objectExport(80, 10, 1.9, "none"); //FanGrid-80mm.stl
-    objectExport(92, 10, 1.9, "none"); //FanGrid-92mm.stl
-    objectExport(120, 10, 1.9, "none"); //FanGrid-120mm.stl
-    objectExport(140, 10, 2.0, "none"); //FanGrid-140mm.stl
-    objectExport(200, 10, 2.0, "none"); //FanGrid-200mm.stl
-    objectExport(60, 10, 1.9, "flush"); //FanGrid-60mm-flush.stl
-    objectExport(70, 10, 1.9, "flush"); //FanGrid-70mm-flush.stl
-    objectExport(80, 10, 1.9, "flush"); //FanGrid-80mm-flush.stl
-    objectExport(92, 10, 1.9, "flush"); //FanGrid-92mm-flush.stl
-    objectExport(120, 10, 1.9, "flush"); //FanGrid-120mm-flush.stl
-    objectExport(140, 10, 2.0, "flush"); //FanGrid-140mm-flush.stl
-    objectExport(200, 10, 2.0, "flush"); //FanGrid-200mm-flush.stl
+    objectExport(60, 10, 1.9, "none"); //FanGrid-60mm
+    objectExport(70, 10, 1.9, "none"); //FanGrid-70mm
+    objectExport(80, 10, 1.9, "none"); //FanGrid-80mm
+    objectExport(92, 10, 1.9, "none"); //FanGrid-92mm
+    objectExport(120, 10, 1.9, "none"); //FanGrid-120mm
+    objectExport(140, 10, 2.0, "none"); //FanGrid-140mm
+    objectExport(200, 10, 2.0, "none"); //FanGrid-200mm
+    objectExport(60, 10, 0.6, "none"); //FanGrid-60mm-minimal
+    objectExport(70, 10, 0.6, "none"); //FanGrid-70mm-minimal
+    objectExport(80, 10, 0.6, "none"); //FanGrid-80mm-minimal
+    objectExport(92, 10, 0.6, "none"); //FanGrid-92mm-minimal
+    objectExport(120, 10, 0.6, "none"); //FanGrid-120mm-minimal
+    objectExport(140, 10, 1.9, "none"); //FanGrid-140mm-minimal
+    objectExport(200, 10, 1.9, "none"); //FanGrid-200mm-minimal
+    objectExport(60, 10, 1.9, "flush"); //FanGrid-60mm-flush
+    objectExport(70, 10, 1.9, "flush"); //FanGrid-70mm-flush
+    objectExport(80, 10, 1.9, "flush"); //FanGrid-80mm-flush
+    objectExport(92, 10, 1.9, "flush"); //FanGrid-92mm-flush
+    objectExport(120, 10, 1.9, "flush"); //FanGrid-120mm-flush
+    objectExport(140, 10, 2.0, "flush"); //FanGrid-140mm-flush
+    objectExport(200, 10, 2.0, "flush"); //FanGrid-200mm-flush
+    objectExport(60, 10, 0.6, "flush"); //FanGrid-60mm-flush-minimal
+    objectExport(70, 10, 0.6, "flush"); //FanGrid-70mm-flush-minimal
+    objectExport(80, 10, 0.6, "flush"); //FanGrid-80mm-flush-minimal
+    objectExport(92, 10, 0.6, "flush"); //FanGrid-92mm-flush-minimal
+    objectExport(120, 10, 0.6, "flush"); //FanGrid-120mm-flush-minimal
+    objectExport(140, 10, 1.9, "flush"); //FanGrid-140mm-flush-minimal
+    objectExport(200, 10, 1.9, "flush"); //FanGrid-200mm-flush-minimal
 }
 
 // Calls this to make minor tweaks for batch rendering
 //   e.g. rotation of the object for best viewing
-module objectExport(var1, var2, var3){
+module objectExport(var1, var2, var3, var4){
 	echo("Rendering Export");
 	// Allows for rotation of object for best orientation of STL file
 	//    Likely need to rotate 90-180 on z axis.
-	rotate([0,0,0])object(var1, var2, var3); //(fanSize, gridHole, gridWall)
+	rotate([0,0,0])object(var1, var2, var3, var4); //(fanSize, gridHole, gridWall, grillMount)
 }
