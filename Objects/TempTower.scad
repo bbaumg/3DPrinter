@@ -78,15 +78,15 @@
 
 // [Basic] //
 // Number Of Levels
-Levels = 4;
+Levels = 5;
 // Temperature Increment Per block
 tempIncrement = 5;
 // Starting Temperature
-startTemp = 230;
+startTemp = 250;
 // Temperature Ascending Or Descending
 tempOrder = -1; // [-1:Descending, 1:Ascending]
 //Type Of Base On the Tower
-baseType = 2; // [0:None, 1:Rounded, 2:Basic]
+baseType = 1; // [0:None, 1:Rounded, 2:Basic]
 // Depth Of Each Layer (Values Less Than coneStartRadius Or 4 May Cause Issues)
 levelDepth = 10;
 // Height Of Each Layer (Values Less Than 3 Or More Than 25 May Cause Isues)
@@ -107,7 +107,7 @@ bridgeThickness = 2;
 // [ Stringing Test] //
 enableStringing = 1; // [0, 1]
 // Stringing Cone Start Radius
-coneStartRadius = 3;
+coneStartRadius = 4;
 //Stringing Cone End Radius
 coneEndRadius = .2;
 // Number Of Stringing Cones
@@ -128,7 +128,7 @@ overhangShelfThickness = 0.5;
 // Detail Of Round Components (High Values Effect Render Time Significantly)
 Detail = 20;
 // Extra Margin around the base
-baseMargin = 5;
+baseMargin = 7;
 // Font
 Font = "Liberation Sans:bold";
 
