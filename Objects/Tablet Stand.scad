@@ -2,14 +2,14 @@
 
 
 
-Base_Width = 110;
-Base_Depth = 125;
-Height = 25;
-Angle = 10; // Degrees
+Base_Width = 150;
+Base_Depth = 160;
+Height = 26;
+Angle = 12; // Degrees
 Lip_Thickness = 9;
-Slot_Width = 15;
+Slot_Width = 13;
 Slot_Rise = 8;
-Back_Bevel = -17;  // Degrees
+Back_Bevel = -12;  // Degrees
 
 echo(Angle);
 
@@ -28,7 +28,8 @@ difference(){
     // Remove the tablet slot
     translate([-1,Lip_Thickness,Slot_Rise])rotate([Angle*(-1),0,0])cube([Base_Width+2,Slot_Width,Height]);
     // Taper the back half
-    translate([0,Base_Depth/4,Height])rotate([Back_Bevel,0,0])cube([Base_Width, Base_Depth, Height*2]);
+    //#translate([0,Base_Depth/4,Height])rotate([Back_Bevel,0,0])cube([Base_Width, Base_Depth, Height*2]);
+    translate([Base_Width,Base_Depth+1,0])rotate([Back_Bevel,0,0])rotate([0,0,180])cube([Base_Width, Base_Depth, Height*2]);
     // Taper the left side
     translate([0,Base_Depth/4,-1])rotate([0,0,80])cube([Base_Depth, Base_Depth/2, Height+2]);
     // Taper the right side
