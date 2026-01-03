@@ -1,0 +1,88 @@
+/*
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	Purpose:  Test retraction settiongs of printer
+	GitHub:		
+	
+	History:	
+		MM/DD/YYYY	Initial creation
+
+	Notes:
+		- Nothing special see inline notes below
+
+*/
+
+/****** Variables ******************************************************
+***********************************************************************/
+baseHeight = 1;				// Thickness ov the base
+basePadding = 2;			// edge to base of cone space
+coneBase = 5;					// width of cone base
+coneHeight = 30;			// height of the cone
+coneSpacing = 20;			// space between cones
+conePoint = 1;				// Suggest larger than nozzle size
+
+// Special variables
+$fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
+
+/****** Imports & Includes & Calculations ******************************
+***********************************************************************/
+include <modules/Modules.scad>
+
+// Global Calculations
+
+
+/****** The Object *****************************************************
+***********************************************************************/
+object();
+
+module object(){
+	// Rendered Calculations
+	baseX = coneBase*2+coneSpacing+basePadding*2;
+	baseY = coneBase+basePadding*2;
+	
+	// Start creating the object
+	roundedCube(x=baseX, y=baseY, z=baseHeight, r=1, xyz="z");
+	translate([coneBase/2+basePadding, coneBase/2+basePadding, 0])cylinder(h=coneHeight, d1=coneBase, d2=conePoint);
+	translate([coneBase/2+basePadding+coneBase+coneSpacing, coneBase/2+basePadding, 0])cylinder(h=coneHeight, d1=coneBase, d2=conePoint);
+}
+
+/*Some basic commands
+translate([0,0,0])
+rotate([0,0,0])
+cube([0,0,0]);
+difference(){}
+*/
+
+
+
+/****** Batch Export***************************************************
+	Use this module to create multiple exports based on rerenderd values
+	https://github.com/bbaumg/3DPrinter/blob/master/export.py
+	<modules/export.py>
+	
+	This script searches for "module export()" and individually renders
+	and exports each item in it. Each item is expected to be on its own line. 
+	The file name will be the comment on the same line, or the module 
+	call if no comment exists. All files will be put in a folder with 
+	the same name as the scad file it's created from.
+***********************************************************************/
+module export() {
+	//objectExport(x); //<filename.stl>
+}
+
+// Calls this to make minor tweaks for batch rendering
+//   e.g. rotation of the object for best viewing
+module objectExport(var1){
+	echo("Rendering Export");
+	// Allows for rotation of object for best orientation of STL file
+	//    Likely need to rotate 90-180 on z axis.
+	rotate([0,0,0])object(var1);
+}
