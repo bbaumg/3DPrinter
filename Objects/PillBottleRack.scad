@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:  Trey to hold pill bottles
-	GitHub:		
+	GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/PillBottleRack.scad
 	
 	History:	
 		01/01/2026	Initial creation
@@ -22,15 +22,18 @@
 
 /****** Variables ******************************************************
 ***********************************************************************/
-bottlesWide = 2;
-bottlesDeep = 1;
-bottleDiameter = 41;
-bottleSpacing = 8;
-cupHeight = 20;
-cupThickness = 2;
-treyThickness = 3;
-treyPadding = 3;
-treyHoles = true;
+bottlesWide = 6;					// number of bottles on X axis
+bottlesDeep = 2;					// number of bottles on Y axis
+bottleDiameter = 39.5;		// diamter measured at top of cup
+//bottleCapDiameter = 49; // NOT USED:  diamter of the bottle cap
+bottleSpacing = 7;				// Space between cups (not bottles)
+cupHeight = 20;						// Height of the cup holding the bottle
+cupThickness = 2;					// Thickness of the cup walls
+//cupPadding = .5;				// NOT USED:  Future: padding from bottle to cup wall
+treyThickness = 3;				// How thick is the trey
+treyPadding = 3;					// How much trey around the outter perimeter
+treyHoles = true;					// true:false Material saving holes in trey
+stacking = true;					// NOT USED:  Make trey base for stacking
 
 // Special variables
 $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
@@ -45,10 +48,6 @@ include <modules/Modules.scad>
 /****** The Object *****************************************************
 ***********************************************************************/
 object();
-// difference(){
-// 	roundedCylinder(d=bottleDiameter+cupThickness*2, h=cupHeight, tr=.5, br=.1,);
-// 	filletedCylinder(d=bottleDiameter, h=cupHeight, tr=.5, br=.1, pad=1);
-// }
 
 module object(){
 	// Rendered Calculations
@@ -64,15 +63,18 @@ module object(){
 	// Trey
 	difference(){
 		roundedCube(x=totalX, y=totalY, z=treyThickness, r=5, xyz="z");
-		for (i = [0:bottlesWide-1]){
-			for (ii = [0:bottlesDeep-1]){
-				translate([treyPadding+(i*totalCupAndSpacing),treyPadding+(ii*totalCupAndSpacing),0])
-					translate([bottleDiameter/2+cupThickness,bottleDiameter/2+cupThickness,0])
-						filletedCylinder(d=bottleDiameter*.75, h=treyThickness, tr=1, br=1, pad=.1, s=60);
+		// Cutout for the holes
+		if (treyHoles == true){
+			for (i = [0:bottlesWide-1]){
+				for (ii = [0:bottlesDeep-1]){
+					translate([treyPadding+(i*totalCupAndSpacing),treyPadding+(ii*totalCupAndSpacing),0])
+						translate([bottleDiameter/2+cupThickness,bottleDiameter/2+cupThickness,0])
+							filletedCylinder(d=bottleDiameter*.75, h=treyThickness, tr=1, br=1, pad=.1);
+				}
 			}
 		}
 	}
-
+	// Add the cups
 	for (i = [0:bottlesWide-1]){
 		for (ii = [0:bottlesDeep-1]){
 			translate([treyPadding+(i*totalCupAndSpacing),treyPadding+(ii*totalCupAndSpacing),treyThickness])cup();
@@ -84,8 +86,8 @@ module object(){
 module cup(){
 	translate([bottleDiameter/2+cupThickness,bottleDiameter/2+cupThickness,0])
 	difference(){
-		roundedCylinder(d=bottleDiameter+cupThickness*2, h=cupHeight, tr=.5, br=.1, s=60);
-		filletedCylinder(d=bottleDiameter, h=cupHeight, tr=.5, br=.1, pad=1, s=60);
+		roundedCylinder(d=bottleDiameter+cupThickness*2, h=cupHeight, tr=.5, br=.1);
+		filletedCylinder(d=bottleDiameter, h=cupHeight, tr=.5, br=.1, pad=1);
 	}
 }
 
@@ -110,7 +112,14 @@ difference(){}
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
+	// First option is good if you need or rotate the object with simple variables
+	// Second option is good if you just want to render the object without rotation
+	// Thrid you could just rotate inline.
 	//objectExport(x); //<filename.stl>
+	// OR
+	//object(x); //<filename.stl>
+	// OR
+	//rotate([0,0,0])object(x); //<filename.stl>
 }
 
 // Calls this to make minor tweaks for batch rendering
