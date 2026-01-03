@@ -154,4 +154,3 @@ module objectExport(var1, var2){
 	//    Likely need to rotate 90-180 on z axis.
 	rotate([0,0,270])object(var1, var2);
 }
-	objectExport(70, 120); //GarageHook - 70x120
