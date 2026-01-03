@@ -67,7 +67,14 @@ difference(){}
 	the same name as the scad file it's created from.
 ***********************************************************************/
 module export() {
+	// First option is good if you need or rotate the object with simple variables
+	// Second option is good if you just want to render the object without rotation
+	// Thrid you could just rotate inline.
 	//objectExport(x); //<filename.stl>
+	// OR
+	//object(x); //<filename.stl>
+	// OR
+	//rotate([0,0,0])object(x); //<filename.stl>
 }
 
 // Calls this to make minor tweaks for batch rendering
