@@ -9,8 +9,8 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 	
-	Purpose:  Grill for computer case fans
-	GitHub:		
+	Purpose:    Grill for computer case fans
+	GitHub:     https://github.com/bbaumg/3DPrinter/blob/master/Objects/FanGrill.scad
 	
 	History:	
 		11/10/2025	Initial creation
