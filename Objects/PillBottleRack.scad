@@ -22,18 +22,18 @@
 
 /****** Variables ******************************************************
 ***********************************************************************/
-bottlesWide = 6;					// number of bottles on X axis
+bottlesWide = 4;					// number of bottles on X axis
 bottlesDeep = 2;					// number of bottles on Y axis
 bottleDiameter = 39.5;		// diamter measured at top of cup
-//bottleCapDiameter = 49; // NOT USED:  diamter of the bottle cap
+bottleCapDiameter = 49; 	// NOT USED:  diamter of the bottle cap
 bottleSpacing = 7;				// Space between cups (not bottles)
 cupHeight = 20;						// Height of the cup holding the bottle
-cupThickness = 2;					// Thickness of the cup walls
-//cupPadding = .5;				// NOT USED:  Future: padding from bottle to cup wall
+cupThickness = 1.8;				// Thickness of the cup walls (multiple of nozzel is best)
 treyThickness = 3;				// How thick is the trey
-treyPadding = 3;					// How much trey around the outter perimeter
+treyPadding = 4;					// How much trey around the outter perimeter
 treyHoles = true;					// true:false Material saving holes in trey
-stacking = true;					// NOT USED:  Make trey base for stacking
+stacking = false;					// NOT USED:  Make trey base for stacking
+stackHeight = 10;					// NOT USED:  Thickness of stacking support
 
 // Special variables
 $fn = $preview ? 32 : 64;		// 0 is OpenSCAD default
@@ -49,14 +49,14 @@ include <modules/Modules.scad>
 ***********************************************************************/
 object();
 
-module object(){
+module object(bottlesWide = bottlesWide, bottlesDeep = bottlesDeep){
 	// Rendered Calculations
-	totalCupDiameter = bottleDiameter+cupThickness*2;
-	totalCupAndSpacing = totalCupDiameter + bottleSpacing;
-	totalX = (treyPadding*2)+(totalCupDiameter*bottlesWide)+(bottleSpacing*(bottlesWide-1));
-	echo("totalX = ", totalX);
-	totalY = (treyPadding*2)+(totalCupDiameter*bottlesDeep)+(bottleSpacing*(bottlesDeep-1));;
-	echo("totalY = ", totalY);
+		totalCupDiameter = bottleDiameter+cupThickness*2;
+		totalCupAndSpacing = totalCupDiameter + bottleSpacing;
+		totalX = (treyPadding*2)+(totalCupDiameter*bottlesWide)+(bottleSpacing*(bottlesWide-1));
+		echo("totalX = ", totalX);
+		totalY = (treyPadding*2)+(totalCupDiameter*bottlesDeep)+(bottleSpacing*(bottlesDeep-1));;
+		echo("totalY = ", totalY);
 
 	// Start creating the object
 
@@ -70,6 +70,21 @@ module object(){
 					translate([treyPadding+(i*totalCupAndSpacing),treyPadding+(ii*totalCupAndSpacing),0])
 						translate([bottleDiameter/2+cupThickness,bottleDiameter/2+cupThickness,0])
 							filletedCylinder(d=bottleDiameter*.75, h=treyThickness, tr=1, br=1, pad=.1);
+				}
+			}
+		}
+	}
+	// Extend trey for stacking
+	if (stacking == true){
+		difference(){
+			// base trey extension
+			translate([0,0,-stackHeight])roundedCube(x=totalX, y=totalY, z=stackHeight, r=5, xyz="z");
+			translate([0,0,-stackHeight])
+			for (i = [0:bottlesWide-1]){
+				for (ii = [0:bottlesDeep-1]){
+					translate([treyPadding+(i*totalCupAndSpacing),treyPadding+(ii*totalCupAndSpacing),0])
+						translate([bottleDiameter/2+cupThickness,bottleDiameter/2+cupThickness,0])
+							filletedCylinder(d=bottleCapDiameter, h=stackHeight, tr=.01, br=1, pad=.1);
 				}
 			}
 		}
@@ -115,11 +130,20 @@ module export() {
 	// First option is good if you need or rotate the object with simple variables
 	// Second option is good if you just want to render the object without rotation
 	// Thrid you could just rotate inline.
-	//objectExport(x); //<filename.stl>
-	// OR
-	//object(x); //<filename.stl>
-	// OR
-	//rotate([0,0,0])object(x); //<filename.stl>
+
+	object(bottlesWide = 1, bottlesDeep = 2);  //PillBottle 1x2
+	object(bottlesWide = 1, bottlesDeep = 3);  //PillBottle 1x3
+	object(bottlesWide = 1, bottlesDeep = 4);  //PillBottle 1x4
+	object(bottlesWide = 1, bottlesDeep = 5);  //PillBottle 1x5
+	object(bottlesWide = 2, bottlesDeep = 2);  //PillBottle 2x2
+	object(bottlesWide = 2, bottlesDeep = 3);  //PillBottle 2x3
+	object(bottlesWide = 2, bottlesDeep = 4);  //PillBottle 2x4
+	object(bottlesWide = 2, bottlesDeep = 5);  //PillBottle 2x5
+	object(bottlesWide = 3, bottlesDeep = 3);  //PillBottle 3x3
+	object(bottlesWide = 3, bottlesDeep = 4);  //PillBottle 3x4
+	object(bottlesWide = 3, bottlesDeep = 5);  //PillBottle 3x5
+	object(bottlesWide = 4, bottlesDeep = 5);  //PillBottle 4x5
+	object(bottlesWide = 5, bottlesDeep = 5);  //PillBottle 5x5
 }
 
 // Calls this to make minor tweaks for batch rendering
