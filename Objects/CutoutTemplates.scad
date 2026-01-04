@@ -22,18 +22,19 @@
 
 /****** Variables ******************************************************
 ***********************************************************************/
-wallThickness = 1.1;						//
-wallHeight = 14;
-baseWidth = 3;						//
-baseThick = 2;
+wallThickness = 1.1;		// Thickness of the wall for cutting
+wallHeight = 14;				// Height of the wall
+baseWidth = 3;					// Width of the base frame
+baseThick = 1;					// Thickness of the base frame
 
+// To Render, select one of the objects below and uncomment it.
+// At the bottom of the file is a list of lots of ways to render things
 
-types = "";
-// Rectangle
-// Circle
-// Window
-// brickmold
-// Moon
+//	rectangle(baseShape="rectangle", sizeA=20, sizeB=30); //Rectangle-20x30
+//	rectangle(baseShape="window", sizeA=20, sizeB=30); //Window-20x30
+//	rectangle(baseShape="window", sizeA=20, sizeB=30, wallHeight=5); //Window-short-20x30
+//	circle(sizeA=20); //Circle-20
+  shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=10); //Shingle-10
 
 
 // Special variables
@@ -48,11 +49,6 @@ include <modules/Modules.scad>
 
 /****** The Object *****************************************************
 ***********************************************************************/
-//	rectangle(baseShape="rectangle", sizeA=20, sizeB=30); //Rectangle-20x30
-//	rectangle(baseShape="window", sizeA=20, sizeB=30); //Window-20x30
-//	rectangle(baseShape="window", sizeA=20, sizeB=30, wallHeight=5); //Window-short-20x30
-//	circle(sizeA=20); //Circle-20
-//	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=10); //Shingle-10
 
 module rectangle(baseShape="rectangle", sizeA=20, sizeB=30, wallHeight=wallHeight){
 	// base
