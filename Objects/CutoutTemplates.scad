@@ -10,7 +10,7 @@
 	GNU General Public License for more details.
 	
 	Purpose:  Simple cutouts for windows and doors in gingerbread house making
-	GitHub:		
+	GitHub:		https://github.com/bbaumg/3DPrinter/blob/master/Objects/CutoutTemplates.scad
 	
 	History:	
 		12/27/2025	Initial creation
