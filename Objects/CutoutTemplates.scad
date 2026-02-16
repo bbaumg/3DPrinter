@@ -14,9 +14,21 @@
 	
 	History:	
 		12/27/2025	Initial creation
+		01/11/2026	Finished initial planned development
 
 	Notes:
-		- Nothing special see inline notes below
+		- This is for creating cutouts and textures for gingerbread house making
+		-	There are several different shapes that include
+				Circles (I know many people have the metal ones, this is here in case)
+				Rectangle cutouts
+				Window shaped indentions
+				Half Moon cutouts
+				shingle pattern indentions
+				brick wall pattern indentions
+				log cabin pattern indentions
+		-	To render all of these, the export python script explained at the bottom is needed
+			If you want to modify a shape for your needs, use one of the module callouts
+			shown at in the "export()" section of the code towrds the bottom.
 
 */
 
@@ -34,7 +46,8 @@ baseThick = 1;					// Thickness of the base frame
 //	rectangle(baseShape="window", sizeA=20, sizeB=30); //Window-20x30
 //	rectangle(baseShape="window", sizeA=20, sizeB=30, wallHeight=5); //Window-short-20x30
 //	circle(sizeA=20); //Circle-20
-  shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=10); //Shingle-10
+//  shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=10); //Shingle-10
+//	halfMoon(sizeA=30, sizeB=15, wallHeight=wallHeight);
 
 
 // Special variables
@@ -129,7 +142,7 @@ module shingle(sizeA=20, sizeB=30, sizeC = 0, wallHeight=wallHeight){
 					shingleOffset = (ii % 2 == 0) ? shingleWidth/2 : 0;
 					translate([shingleOffset,0,0])
 						translate([i*shingleWidth,ii*shingleHeight,0])
-							shapeHalfMoon(sizeA = shingleWidth+wallThickness, sizeB = shingleHeight, wallThickness = wallThickness, wallHeight = wallHeight+depthOffset);
+							shingleShape(sizeA = shingleWidth+wallThickness, sizeB = shingleHeight, wallThickness = wallThickness, wallHeight = wallHeight+depthOffset);
 				}
 			}
 		}
@@ -141,14 +154,93 @@ module shingle(sizeA=20, sizeB=30, sizeC = 0, wallHeight=wallHeight){
 	}
 }
 
-module shapeHalfMoon(sizeA = 20, sizeB = 10, wallThickness = wallThickness, wallHeight = wallHeight){
+module shingleShape(sizeA = 20, sizeB = 10, wallThickness = wallThickness, wallHeight = wallHeight){
 	difference(){
 		cylinder(d=sizeA, h=wallHeight);
 		translate([0,0,-1])cylinder(d=sizeA-wallThickness*2, h=wallHeight+2);
 		translate([-sizeA/2-1,0,-1])cube([sizeA+2, sizeB+2, wallHeight+2]);
 	}
-	
+}
 
+module halfMoon(sizeA=20, sizeB=10, wallHeight=wallHeight){
+	// The main window
+	difference(){
+		halfMoonShape(sizeA=sizeA, sizeB=sizeB, wallHeight=wallHeight);
+		translate([0,0,-1])halfMoonShape(sizeA=sizeA-wallThickness*2, sizeB=sizeB-wallThickness*2, wallHeight=wallHeight+2);
+	}
+	// The base
+		difference(){
+		halfMoonShape(sizeA=sizeA+baseWidth, sizeB=sizeB+baseWidth, wallHeight=baseThick);
+		translate([0,0,-1])halfMoonShape(sizeA=sizeA-wallThickness*2-baseWidth, sizeB=sizeB-wallThickness*2-baseWidth, wallHeight=baseThick+2);
+	}
+}
+
+module halfMoonShape(sizeA=20, sizeB=10, wallHeight=wallHeight){
+	translate([0,0,wallHeight/2]){
+		difference(){
+			cylinder(d=sizeA, h=wallHeight, center = true);
+			translate([0,-sizeB,0])cube([sizeA, sizeA, wallHeight+2], center = true);
+		}
+	}
+}
+
+
+//bricks(sizeA=150, sizeB=100, sizeC = 10, sizeD = 10/1.618, wallHeight=5);
+bricks(sizeA=150, sizeB=100, sizeC = 15, sizeD = 15/1.618, wallHeight=5);
+//bricks(sizeA=150, sizeB=100, sizeC = 150, sizeD = 5, wallHeight=5, style="log");
+
+module bricks(sizeA=150, sizeB=100, sizeC = 10, sizeD = 5, wallHeight=wallHeight, style="brick"){
+	
+	depthOffset = 4;
+	// sizeA = total X width
+	// sizeB = total Y height
+	// SizeC = individual brick width
+	// SizeD = individual brick height
+
+	brickWidth = sizeC;
+	brickHeight = sizeD;
+	
+	widthCount = floor(sizeA/(brickWidth-wallThickness));
+	echo("widthCount = ", widthCount);
+	actualWidth = (style == "brick") ? widthCount * (brickWidth-wallThickness) + brickWidth/2 + wallThickness :
+								(style == "log") ? widthCount * (brickWidth-wallThickness) + wallThickness :
+								0;
+	echo("actualWidth = ", actualWidth);
+
+	heightCount = floor(sizeB/(brickHeight-wallThickness));
+	echo("heightCount = ", heightCount);
+	actualHeight = heightCount * (brickHeight-wallThickness) +wallThickness;
+	echo("actualHeight = ", actualHeight);
+
+	// base
+	difference(){
+			translate([-baseWidth, -baseWidth, 0])roundedCube(x=actualWidth+baseWidth*2-wallThickness/2, y=actualHeight+baseWidth*2-wallThickness/2, z=baseThick, r=2, xyz="z");
+			translate([baseWidth, baseWidth, -1])roundedCube(x=actualWidth-baseWidth*2-wallThickness/2, y=actualHeight-baseWidth-2-wallThickness/2, z=baseThick+2, r=2, xyz="z");
+	}
+
+	// brick pattern
+	for (i = [0:widthCount-1]){
+		for (ii = [0:heightCount-1]){
+			//brickOffset = (ii % 2 == 0) ? brickWidth/2 : 0;
+			brickOffset = (ii % 2 == 0 && style == "brick") ? brickWidth/2 :
+										(ii % 2 == 0 && style == "log") ? 0 :
+										0;
+			translate([brickOffset,0,0])			
+				translate([i * (brickWidth-wallThickness),ii * (brickHeight-wallThickness),0])bricksShape(brickWidth = brickWidth, brickHeight = brickHeight, wallHeight=wallHeight+depthOffset);
+		}
+	}
+	// outter wall
+	difference(){
+		cube([actualWidth, actualHeight, wallHeight]);
+		translate([wallThickness, wallThickness,-1])cube([actualWidth-wallThickness*2, actualHeight-wallThickness*2, wallHeight+2]);
+	}
+}
+
+module bricksShape(brickWidth = 10, brickHeight=5, wallHeight=wallHeight){
+	difference(){
+		cube([brickWidth, brickHeight, wallHeight]);
+		translate([wallThickness,wallThickness,-1])cube([brickWidth-wallThickness*2, brickHeight-wallThickness*2, wallHeight+2]);
+	}
 }
 
 /*Some basic commands
@@ -263,6 +355,34 @@ module export() {
 	circle(sizeA=110); //Circle-110
 	circle(sizeA=120); //Circle-120
 
+	halfMoon(sizeA=20, sizeB=5, wallHeight=wallHeight); //HalfMoon-20x5
+	halfMoon(sizeA=20, sizeB=7, wallHeight=wallHeight); //HalfMoon-20x7
+	halfMoon(sizeA=20, sizeB=10, wallHeight=wallHeight); //HalfMoon-20x10
+	halfMoon(sizeA=30, sizeB=7, wallHeight=wallHeight); //HalfMoon-30x7
+	halfMoon(sizeA=30, sizeB=10, wallHeight=wallHeight); //HalfMoon-30x10
+	halfMoon(sizeA=30, sizeB=12, wallHeight=wallHeight); //HalfMoon-30x12
+	halfMoon(sizeA=30, sizeB=15, wallHeight=wallHeight); //HalfMoon-30x15
+	halfMoon(sizeA=40, sizeB=10, wallHeight=wallHeight); //HalfMoon-40x10
+	halfMoon(sizeA=40, sizeB=12, wallHeight=wallHeight); //HalfMoon-40x12
+	halfMoon(sizeA=40, sizeB=15, wallHeight=wallHeight); //HalfMoon-40x15
+	halfMoon(sizeA=40, sizeB=17, wallHeight=wallHeight); //HalfMoon-40x17
+	halfMoon(sizeA=40, sizeB=20, wallHeight=wallHeight); //HalfMoon-40x20
+	halfMoon(sizeA=50, sizeB=10, wallHeight=wallHeight); //HalfMoon-50x10
+	halfMoon(sizeA=50, sizeB=15, wallHeight=wallHeight); //HalfMoon-50x15
+	halfMoon(sizeA=50, sizeB=20, wallHeight=wallHeight); //HalfMoon-50x20
+	halfMoon(sizeA=50, sizeB=25, wallHeight=wallHeight); //HalfMoon-50x25
+	halfMoon(sizeA=60, sizeB=10, wallHeight=wallHeight); //HalfMoon-60x10
+	halfMoon(sizeA=60, sizeB=15, wallHeight=wallHeight); //HalfMoon-60x15
+	halfMoon(sizeA=60, sizeB=20, wallHeight=wallHeight); //HalfMoon-60x20
+	halfMoon(sizeA=60, sizeB=25, wallHeight=wallHeight); //HalfMoon-60x25
+	halfMoon(sizeA=60, sizeB=30, wallHeight=wallHeight); //HalfMoon-60x30
+	halfMoon(sizeA=70, sizeB=10, wallHeight=wallHeight); //HalfMoon-70x10
+	halfMoon(sizeA=70, sizeB=15, wallHeight=wallHeight); //HalfMoon-70x15
+	halfMoon(sizeA=70, sizeB=20, wallHeight=wallHeight); //HalfMoon-70x20
+	halfMoon(sizeA=70, sizeB=25, wallHeight=wallHeight); //HalfMoon-70x25
+	halfMoon(sizeA=70, sizeB=30, wallHeight=wallHeight); //HalfMoon-70x30
+	halfMoon(sizeA=70, sizeB=35, wallHeight=wallHeight); //HalfMoon-70x35
+
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=10); //Shingle-10
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=15); //Shingle-15
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=20); //Shingle-20
@@ -270,6 +390,18 @@ module export() {
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=30); //Shingle-30
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=35); //Shingle-35
 	shingle(sizeA=150, sizeB=100, wallHeight=5, sizeC=40); //Shingle-40
+
+	bricks(sizeA=150, sizeB=100, sizeC = 10, sizeD = 10/1.618, wallHeight=5); //Bricks-10
+	bricks(sizeA=150, sizeB=100, sizeC = 15, sizeD = 15/1.618, wallHeight=5); //Bricks-15
+	bricks(sizeA=150, sizeB=100, sizeC = 20, sizeD = 20/1.618, wallHeight=5); //Bricks-20
+	bricks(sizeA=150, sizeB=100, sizeC = 25, sizeD = 25/1.618, wallHeight=5); //Bricks-25
+	bricks(sizeA=150, sizeB=100, sizeC = 30, sizeD = 30/1.618, wallHeight=5); //Bricks-30
+
+	bricks(sizeA=150, sizeB=100, sizeC = 150, sizeD = 10, wallHeight=5, style="log"); //Log-10
+	bricks(sizeA=150, sizeB=100, sizeC = 150, sizeD = 15, wallHeight=5, style="log"); //Log-15
+	bricks(sizeA=150, sizeB=100, sizeC = 150, sizeD = 20, wallHeight=5, style="log"); //Log-20
+	bricks(sizeA=150, sizeB=100, sizeC = 150, sizeD = 25, wallHeight=5, style="log"); //Log-25
+
 }
 
 // Calls this to make minor tweaks for batch rendering
