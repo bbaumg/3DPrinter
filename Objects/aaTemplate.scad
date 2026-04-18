@@ -51,6 +51,7 @@ translate([0,0,0])
 rotate([0,0,0])
 cube([0,0,0]);
 difference(){}
+a =   test ? TrueValue : FalseValue ;  // ternary function
 */
 
 
